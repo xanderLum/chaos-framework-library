@@ -12,8 +12,11 @@ echo 'hi my workspace is '+ workspace
 // sh (script: "ls -lrt '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/*/vars/Main.groovy'")
 def isExisting = fileExists '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy'
 echo 'is the fileExisting? '+isExisting
-def execute = load "${workspace}@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy"
-execute.call(this)
+// def execute = load "${workspace}@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy"
+// execute.call(this)
+
+def execute = load "Main.groovy"
+execute.call()
 // echo 'hi im at conditional stage'
 //
 //  if(isUnix()){
