@@ -1,7 +1,7 @@
 package vars
 
 
-import constants.API
+import constants.APIGroovy
 import utility.APIReqBuilder
 
 /*
@@ -45,7 +45,7 @@ def call(Map config) {
                 steps {
                     script {
                         println("I am in the test api stage")
-                        APIReqBuilder.callAPI this, API.TEST_API
+                        APIReqBuilder.callAPI this, APIGroovy.TEST_API
                     }
                 }
             }
