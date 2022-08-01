@@ -1,7 +1,6 @@
 // def Main
 
-// node {
-
+node {
 //get parameters from Job
 // def builds = builds.tokenize(",")
 // def ip_address_node = ip_address_node.trim()
@@ -36,4 +35,4 @@ execute.call()
 //     Main(
 //         []
 //     )
-// }
+}

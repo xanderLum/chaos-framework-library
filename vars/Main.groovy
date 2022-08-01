@@ -5,16 +5,16 @@ import utility.*
 
 def call() {
     pipeline {
-        stages {
+//        stages {
             stage('Invoke test API') {
-                steps {
+//                steps {
                     script {
                         echo 'I am in the test api stage'
                         APIReqBuilder.callAPI this, API.TEST_API
                     }
-                }
+//                }
             }
-        }
+//        }
         post {
             always {
                 script {
