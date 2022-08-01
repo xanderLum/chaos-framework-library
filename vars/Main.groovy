@@ -1,10 +1,8 @@
 package vars
 
+import constants.*
+import utility.*
 
-import constants.API
-import utility.APIReqBuilder
-
-//@Grab('com.github.groovy-wslite:groovy-wslite:1.1.3')
 def call() {
     pipeline {
         stages {
@@ -26,4 +24,5 @@ def call() {
         }
     }
 }
+
 return this
