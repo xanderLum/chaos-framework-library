@@ -6,33 +6,14 @@ node {
 // def ip_address_node = ip_address_node.trim()
 // def port_node = port_node.trim()
 // def branch = branch.trim()
-def workspace = pwd()
-echo 'hi my workspace is '+ workspace
-// sh (script: "ls -lrt '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/*/vars/Main.groovy'")
-def isExisting = fileExists '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy'
-echo 'is the fileExisting? '+isExisting
-def execute = load "${workspace}@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy"
-// execute.call(this)
+    def workspace = pwd()
+    echo 'hi my workspace is '+ workspace
+    // sh (script: "ls -lrt '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/*/vars/Main.groovy'")
+    def isExisting = fileExists '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy'
+    echo 'is the fileExisting? '+isExisting
 
-// def execute = load "Main.groovy"
-execute.call()
-// echo 'hi im at conditional stage'
-//
-//  if(isUnix()){
-//         Main = load "${workspace}@script/*/vars/Main.groovy"
-//         echo 'loaded at unix stage'
-//     }
-//     else{
-//         Main = load("..\\workspace@script\\*\\vars\\Main.groovy")
-//         echo 'loaded at non-unix stage'
-//     }
-
-// stage 'Checking out code from esb repository'
-// git branch: branch, url: 'ssh://git@giturl/integration_bus.git'
-
-// load '../workspace@script/esb_deploybar_pipeline/deploy_esb.groovy'
-
-//     Main(
-//         []
-//     )
+    stage('Invoke test API') {
+        def execute = load "${workspace}@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy"
+        execute.call()
+    }
 }
