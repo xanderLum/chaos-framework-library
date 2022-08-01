@@ -2,7 +2,7 @@ package constants;
 
 import java.util.Map;
 
-enum API {
+public enum API {
     MANGLE_PORTAL_CONTEXT("/mangle-services"),
     CPU_FAULT_API("/rest/api/v1/faults/cpu"),
     MEMORY_FAULT_API("/rest/api/v1/faults/memory"),

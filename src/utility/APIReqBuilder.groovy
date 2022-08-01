@@ -2,7 +2,7 @@ package utility
 
 import constants.API
 
-class APIReqBuilder {
+public class APIReqBuilder {
     static String HTTPS = "https://";
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
