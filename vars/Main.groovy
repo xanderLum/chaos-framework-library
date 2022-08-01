@@ -14,7 +14,7 @@ return this*/
 
 def call(Map config) {
     pipeline {
-        agent { label config.nodeName }
+//        agent { label config.nodeName }
         /*triggers {
             //      cron('0 9,12,15 * * 1-5')
             //trigger in 12nn and 6pm daily Monday to Friday
@@ -26,7 +26,6 @@ def call(Map config) {
             disableConcurrentBuilds()
         }*/
         stages {
-
             stage('Clean Workspace') {
                 steps {
                     script {
@@ -57,7 +56,7 @@ def call(Map config) {
     post {
         always {
             script {
-                CommonUtilities.postBuildStatusToJiraIssue this
+                println("end!")
             }
         }
     }

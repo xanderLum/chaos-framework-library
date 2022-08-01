@@ -2,9 +2,12 @@
 
 @Library('chaos-fault-orchestrator') _
 
-Main([
-    numBuildToKeep: '5'
-])
+Main(
+    [
+        numBuildToKeep: '5',
+        param: 'test',
+    ]
+)
 
 /* node {
 //get parameters from Job
