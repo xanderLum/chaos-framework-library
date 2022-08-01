@@ -2,7 +2,7 @@
 
 @Library('chaos-fault-orchestrator') _
 
-Main(
+Orchestrator(
     [
         numBuildToKeep: '5',
         param: 'test',
