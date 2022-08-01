@@ -1,6 +1,12 @@
 // def Main
 
-node {
+@Library('chaos-fault-orchestrator') _
+
+Main([
+    numBuildToKeep: '5'
+])
+
+/* node {
 //get parameters from Job
 // def builds = builds.tokenize(",")
 // def ip_address_node = ip_address_node.trim()
@@ -8,12 +14,12 @@ node {
 // def branch = branch.trim()
     def workspace = pwd()
     echo 'hi my workspace is '+ workspace
-    // sh (script: "ls -lrt '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/*/vars/Main.groovy'")
-    def isExisting = fileExists '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy'
+    // sh (script: "ls -lrt '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script *//*//* vars/Main.groovy'")
+    def isExisting = fileExists '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/f33b87392be1adfbe1ea0b91ef8b8412c3b563c0981feabb062a46a24fb8a2fe/vars/Main.groovy'
     echo 'is the fileExisting? '+isExisting
 
     stage('Invoke test API') {
-        def execute = load "${workspace}@script/8a647124ff08a9ef4155c3a67b46b73a2b1c67f161df4654cb34016ba1cadac5/vars/Main.groovy"
+        def execute = load "${workspace}@script/f33b87392be1adfbe1ea0b91ef8b8412c3b563c0981feabb062a46a24fb8a2fe/vars/Main.groovy"
         execute.call()
     }
-}
+} */
