@@ -3,10 +3,10 @@ def Main
 node {
 
 //get parameters from Job
-def builds = builds.tokenize(",")
-def ip_address_node = ip_address_node.trim()
-def port_node = port_node.trim()
-def branch = branch.trim()
+// def builds = builds.tokenize(",")
+// def ip_address_node = ip_address_node.trim()
+// def port_node = port_node.trim()
+// def branch = branch.trim()
 def workspace = pwd()
 echo 'hi my workspace is '+ workspace
 
