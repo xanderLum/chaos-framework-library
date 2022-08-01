@@ -16,6 +16,6 @@ class APIReqBuilder {
         println ("API test url: "+urlBldr.toString());
         def response = sh(script: 'curl -X POST -d @req.json -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' https://xander.mocklab.io/__admin/mappings', returnStdout: true)
         println ("response : " + response);
-//        return response;
+        return response;
     }
 }
