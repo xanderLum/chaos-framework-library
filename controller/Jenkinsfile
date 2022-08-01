@@ -1,4 +1,4 @@
-def Main
+// def Main
 
 node {
 
@@ -10,16 +10,16 @@ node {
 def workspace = pwd()
 echo 'hi my workspace is '+ workspace
 
-echo 'hi im at conditional stage'
-
- if(isUnix()){
-        Main = load "${workspace}@script/*/controller/Main.groovy"
-        echo 'loaded at unix stage'
-    }
-    else{
-        Main = load("..\\workspace@script\\*\\controller\\Main.groovy")
-        echo 'loaded at non-unix stage'
-    }
+// echo 'hi im at conditional stage'
+//
+//  if(isUnix()){
+//         Main = load "${workspace}@script/*/controller/Main.groovy"
+//         echo 'loaded at unix stage'
+//     }
+//     else{
+//         Main = load("..\\workspace@script\\*\\controller\\Main.groovy")
+//         echo 'loaded at non-unix stage'
+//     }
 
 // stage 'Checking out code from esb repository'
 // git branch: branch, url: 'ssh://git@giturl/integration_bus.git'
