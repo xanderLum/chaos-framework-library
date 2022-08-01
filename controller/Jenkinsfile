@@ -9,7 +9,8 @@ node {
 // def branch = branch.trim()
 def workspace = pwd()
 echo 'hi my workspace is '+ workspace
-
+def execute = load "${workspace}@script/*/controller/Main.groovy"
+execute.call()
 // echo 'hi im at conditional stage'
 //
 //  if(isUnix()){
@@ -25,7 +26,8 @@ echo 'hi my workspace is '+ workspace
 // git branch: branch, url: 'ssh://git@giturl/integration_bus.git'
 
 // load '../workspace@script/esb_deploybar_pipeline/deploy_esb.groovy'
-    Main(
-        []
-    )
+
+//     Main(
+//         []
+//     )
 }
