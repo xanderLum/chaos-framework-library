@@ -1,6 +1,6 @@
 def Main
 
-node ("Built-In Node"){
+node {
 
 //get parameters from Job
 def builds = builds.tokenize(",")
@@ -13,11 +13,11 @@ echo 'hi my workspace is '+ workspace
 echo 'hi im at conditional stage'
 
  if(isUnix()){
-        Main = load "${workspace}@script/../controller/Main.groovy"
+        Main = load "${workspace}@script/*/controller/Main.groovy"
         echo 'loaded at unix stage'
     }
     else{
-        Main = load("..\\workspace@script\\..\\controller\Main.groovy")
+        Main = load("..\\workspace@script\\*\\controller\Main.groovy")
         echo 'loaded at non-unix stage'
     }
 
