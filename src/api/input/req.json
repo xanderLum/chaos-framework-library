@@ -1,0 +1,8 @@
+{
+  "request": {
+    "url": "/hello-world"
+  },
+  "response": {
+    "body": "Hi!"
+  }
+}
