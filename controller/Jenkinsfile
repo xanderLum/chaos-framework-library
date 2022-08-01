@@ -17,7 +17,7 @@ echo 'hi im at conditional stage'
         echo 'loaded at unix stage'
     }
     else{
-        Main = load("..\\workspace@script\\*\\controller\Main.groovy")
+        Main = load("..\\workspace@script\\*\\controller\\Main.groovy")
         echo 'loaded at non-unix stage'
     }
 
