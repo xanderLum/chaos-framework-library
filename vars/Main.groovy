@@ -7,18 +7,7 @@ import utility.*
 
 def call() {
     pipeline {
-//        agent { label config.nodeName }
-        /*triggers {
-  //      cron('0 9,12,15 * * 1-5')
-            //trigger in 12nn and 6pm daily Monday to Friday
-            cron('0 12,18 * * 1-5')
-        }*/
-        options {
-//            buildDiscarder(logRotator(numToKeepStr: config.numBuildToKeep))
-            skipDefaultCheckout()
-            disableConcurrentBuilds()
-        }
-        stages {
+        /*stages {
             /*stage('Clean Workspace') {
                 steps {
                     script {
@@ -34,21 +23,19 @@ def call() {
                     }
                 }
             }*/
-            stage('Invoke test API') {
-                steps {
-                    script {
-                        echo 'I am in the test api stage'
-                        APIReqBuilder.callAPI this, API.TEST_API
-
-                    }
+        stage('Invoke test API') {
+            steps {
+                script {
+                    echo 'I am in the test api stage'
+                    APIReqBuilder.callAPI this, API.TEST_API
                 }
             }
         }
-        post {
-            always {
-                script {
-                    echo 'end'
-                }
+    }
+    post {
+        always {
+            script {
+                echo 'end'
             }
         }
     }
