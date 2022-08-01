@@ -1,4 +1,4 @@
-package controller
+package vars
 
 import constants.API
 import utility.APIReqBuilder
