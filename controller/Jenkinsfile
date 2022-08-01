@@ -9,7 +9,7 @@ node {
 // def branch = branch.trim()
 def workspace = pwd()
 echo 'hi my workspace is '+ workspace
-ls -lrt '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/*/controller/Main.groovy'
+sh (script: "ls -lrt '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/*/controller/Main.groovy")
 def isExisting = fileExists '/var/lib/jenkins/workspace/chaos-engr/chaos-fault-orchestrator@script/*/controller/Main.groovy'
 echo 'is the fileExisting? '+isExisting
 def execute = load "${workspace}@script/*/controller/Main.groovy"
