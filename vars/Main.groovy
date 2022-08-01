@@ -1,7 +1,7 @@
 package vars
 
-import constants.API
-import utility.APIReqBuilder
+import constants.*
+import utility.*
 
 //@Grab('com.github.groovy-wslite:groovy-wslite:1.1.3')
 
