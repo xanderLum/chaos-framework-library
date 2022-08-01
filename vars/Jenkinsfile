@@ -1,6 +1,6 @@
 // def Main
 
-node {
+// node {
 
 //get parameters from Job
 // def builds = builds.tokenize(",")
@@ -36,4 +36,4 @@ execute.call()
 //     Main(
 //         []
 //     )
-}
+// }
