@@ -1,13 +1,14 @@
 package utility
 
-import constants.API
+import constants.*
 
-public class APIReqBuilder {
+class APIReqBuilder {
     static String HTTPS = "https://";
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
     static def callAPI(script, api) {
-        echo 'Calling api: ' + API.apiURL(api);
+//        println('Calling api: ' + API.apiURL(api));
+        println("Calling api"+API.apiURL(api));
 //        script.sh "curl -X POST -d '{ \"request\": { \"url\": \"/hello-world\" }, \"response\": { \"body\": \"Hi!\" }}' -H 'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9' https://xander.mocklab.io/__admin/mappings"
         def urlBldr = new StringBuilder();
         urlBldr.append(HTTPS);
