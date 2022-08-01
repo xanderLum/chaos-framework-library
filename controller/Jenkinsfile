@@ -1,3 +1,26 @@
-Main(
-    []
-)
+def Main
+
+node {
+
+//get parameters from Job
+def builds = builds.tokenize(",")
+def ip_address_node = ip_address_node.trim()
+def port_node = port_node.trim()
+def branch = branch.trim()
+def workspace = pwd()
+
+ if(isUnix()){
+        Main = load "${workspace}@script/controller/Main.groovy"
+    }
+    else{
+        Main = load("..\\workspace@script\\controller\Main.groovy")
+    }
+
+// stage 'Checking out code from esb repository'
+// git branch: branch, url: 'ssh://git@giturl/integration_bus.git'
+
+// load '../workspace@script/esb_deploybar_pipeline/deploy_esb.groovy'
+    Main(
+        []
+    )
+}
