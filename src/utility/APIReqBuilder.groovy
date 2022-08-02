@@ -83,7 +83,7 @@ class APIReqBuilder implements Serializable {
 
     static def apiCall(script, String method, String data) {
         script.sh 'pwd'
-        def response = script.sh "curl -X POST -d ${data} -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' https://xander.mocklab.io/__admin/mappings', returnStdout: true"
+        def response = script.sh "curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' https://xander.mocklab.io/__admin/mappings, returnStdout: true"
         script.sh "echo response: ${response}"
     }
 
