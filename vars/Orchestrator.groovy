@@ -4,6 +4,8 @@ package vars
 import constants.APIGroovy
 import utility.APIReqBuilder
 
+@Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
+
 /*
 def call() {
     println("I am in the test api stage")

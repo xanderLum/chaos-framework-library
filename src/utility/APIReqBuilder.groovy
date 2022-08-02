@@ -1,12 +1,15 @@
 package utility
 
-
+@Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
+@Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
+import com.cloudbees.groovy.cps.NonCPS
 import constants.APIGroovy
 
 class APIReqBuilder {
     static String HTTPS = "https://";
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
+    @NonCPS
     static def callAPI(script, apiId) {
         String workspace = script.WORKSPACE
         script.sh "echo 'workspace...'"
@@ -25,9 +28,11 @@ class APIReqBuilder {
         postConnection.requestMethod = 'POST'
         assert postConnection.responseCode == 200*/
 
-//        def postmanPost = new URL('https://xander.mocklab.io/__admin/mappings')
         def postmanPost = new URL(urlBldr.toString());
+
         def postConnection = postmanPost.openConnection()
+        postConnection.requestMethod = 'POST'
+
 //        def form = "param1=This is request parameter."
         def form = []
         new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
