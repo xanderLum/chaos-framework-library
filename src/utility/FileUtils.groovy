@@ -2,7 +2,7 @@ package utility
 
 class FileUtils {
 
-    static String FILEPARAM = "request.zip"
+    static String FILEPARAM = "request"
 
     static def processFileParam(script) {
         script.sh "echo from scrip.sh: pwd()"
