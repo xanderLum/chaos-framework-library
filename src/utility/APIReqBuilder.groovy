@@ -35,7 +35,7 @@ class APIReqBuilder {
 //        def form = "param1=This is request parameter."
 //        def form = []
 //        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
-        def form = getInputJSONReq(script, workspace)
+        def form = "${getInputJSONReq(script, workspace)}"
         postConnection.doOutput = true
         def text
         postConnection.with {
@@ -50,9 +50,9 @@ class APIReqBuilder {
     }
 
     @NonCPS
-    def getInputJSONReq(script, workspace) {
+    static def getInputJSONReq(script, workspace) {
         def form = []
-        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
+        new File(new StringBuilder(String.valueOf(workspace)).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
         script.sh "echo 'form req json :'${form}"
         return form
     }
