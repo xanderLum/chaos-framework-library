@@ -1,5 +1,6 @@
 package utility
 
+import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
@@ -75,6 +76,7 @@ class APIReqBuilder implements Serializable {
     }
 
 //    def restCall(String method, String resource, String data = '') {
+    @NonCPS
     static def restCall(script, String method, String data = '') {
         script.sh "echo data content: ${data}"
 //        def URL url = new URL("${Params.REST_BASE_URI}/${resource}")
