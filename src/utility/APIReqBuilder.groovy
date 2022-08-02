@@ -1,5 +1,6 @@
 package utility
 
+import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
@@ -60,12 +61,12 @@ class APIReqBuilder implements Serializable {
         script.sh "echo 'end call'"
     }
 
-//    @NonCPS
+    @NonCPS
     static def getInputJSONReq(script, workspace) {
         def form = []
         script.sh "echo 'executing new File'"
         new File(new StringBuilder(String.valueOf(workspace)).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
-        script.sh "echo 'form req json :'${form}'"
+        script.sh "echo 'form req json :'${form}"
         return form
     }
 
