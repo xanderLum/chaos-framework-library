@@ -8,6 +8,28 @@ class APIReqBuilder implements Serializable {
     static String HTTPS = "https://";
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
+    static def dataReqBuilder(script, reqFile, id) {
+        script.sh 'whereami pwd'
+        script.sh 'ls -lrt'
+        println "reqFile : ${reqFile}"
+
+        if (script.fileExists(file: reqFile)) {
+            def form = new StringBuilder()
+            /*String workspace = script.WORKSPACE
+            script.sh "echo 'executing new File'"
+            StringBuilder sb = new StringBuilder()
+            sb.append(workspace)
+            sb.append('/src/api/input/req.json')
+            new File(sb.toString()).eachLine { line -> form.append(line) }*/
+            reqFile.eachLine { line -> form.append(line) }
+            println "data : ${form.toString()}"
+            return form.toString()
+        } else {
+            println "reqFile doesn't exist! for API: ${id}"
+            return
+        }
+    }
+
     static def callAPI(script, apiId) {
         String workspace = script.WORKSPACE
         script.sh "echo 'workspace...'"
@@ -77,12 +99,12 @@ class APIReqBuilder implements Serializable {
         return form.toString()
     }
 
-//    def restCall(String method, String resource, String data = '') {
-
     static def apiCall(script, String method, String data) {
         script.sh 'pwd'
         def URLstr = "${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}"
-        def response = script.sh "(returnStdout: true, script: 'curl -X ${method} -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \"${URLstr}\"')"
+//        def response = script.sh "curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \"${URLstr}\""
+        def response = sh "curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \"${URLstr}\""
+
         script.sh "echo response: ${response}"
     }
 
