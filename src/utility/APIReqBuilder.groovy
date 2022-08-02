@@ -26,20 +26,21 @@ class APIReqBuilder implements Serializable {
         postConnection.requestMethod = 'POST'
         assert postConnection.responseCode == 200*/
 
-        def postmanPost = new URL(urlBldr.toString());
+        /*def postmanPost = new URL(urlBldr.toString());
         script.sh "echo postmanPost new URL "
         def postConnection = postmanPost.openConnection()
         script.sh "echo postConnection open"
         postConnection.requestMethod = 'POST'
-        script.sh "echo set postConnection requestMethod POST.. getting inputJSONReq..."
+        script.sh "echo set postConnection requestMethod POST.. getting inputJSONReq..."*/
 
 //        def form = "param1=This is request parameter."
 //        def form = []
 //        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
-        def form = $ { getInputJSONReq(script, workspace) }
+        String form = $ { getInputJSONReq(script, workspace) }
 
         script.sh "echo retrieved inputJSONReq form"
-        postConnection.doOutput = true
+        restCall(script, "POST", form)
+        /*postConnection.doOutput = true
         script.sh "echo postConnection doOutput=true"
 
         def text
@@ -50,8 +51,8 @@ class APIReqBuilder implements Serializable {
             text = content.text
         }
         assert postConnection.responseCode == 200
-        script.sh "echo 'response: '${postConnection.responseCode}"
-        return postConnection.responseCode;
+        script.sh "echo 'response: '${postConnection.responseCode}"*/
+        script.sh "echo 'end call'"
     }
 
 //    @NonCPS
@@ -61,5 +62,42 @@ class APIReqBuilder implements Serializable {
         new File(new StringBuilder(String.valueOf(workspace)).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
         script.sh "echo 'form req json :'${form}"
         return form
+    }
+
+//    def restCall(String method, String resource, String data = '') {
+    static def restCall(script, String method, String data = '') {
+//        def URL url = new URL("${Params.REST_BASE_URI}/${resource}")
+        def URL url = new URL("${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}")
+        def HttpURLConnection connection = url.openConnection()
+
+        /*script.withCredentials([usernamePassword(credentialsId: 'restful-api', passwordVariable: 'RA_PASS', usernameVariable: 'RA_USER')]) {
+            String encoded = Base64.getEncoder().encodeToString(("${env.RA_USER}:${env.RA_PASS}").getBytes(StandardCharsets.UTF_8))
+            connection.setRequestProperty("Authorization", "Basic ${encoded}");
+        }*/
+
+        connection.setRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9");
+        connection.setRequestProperty("content-type", "application/json");
+        connection.setRequestMethod(method)
+        connection.doOutput = true
+
+        if (data != '') {
+            def writer = new OutputStreamWriter(connection.outputStream)
+            writer.write(data)
+            writer.flush()
+            writer.close()
+        }
+
+        connection.connect();
+
+        def statusCode = connection.responseCode
+        if (statusCode != 200 && statusCode != 201) {
+            String text = connection.getErrorStream().text
+            connection = null
+            throw new Exception(text)
+        }
+
+        String text = connection.content.text
+        script.sh "echo 'connection content: '${text}"
+        connection = null
     }
 }
