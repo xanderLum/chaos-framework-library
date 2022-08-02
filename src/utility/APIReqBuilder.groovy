@@ -43,7 +43,8 @@ class APIReqBuilder implements Serializable {
 //        new File(new StringBuilder(String.valueOf(workspace)).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
 //        script.sh "echo 'form req json :'${form}'"
 
-//        script.sh "echo retrieved inputJSONReq form"
+        script.sh "echo retrieved inputJSONReq form"
+
         restCall(script, "POST", form)
         /*postConnection.doOutput = true
         script.sh "echo postConnection doOutput=true"
@@ -75,6 +76,7 @@ class APIReqBuilder implements Serializable {
 
 //    def restCall(String method, String resource, String data = '') {
     static def restCall(script, String method, String data = '') {
+        script.sh "echo 'data content: '${data}"
 //        def URL url = new URL("${Params.REST_BASE_URI}/${resource}")
         def URL url = new URL("${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}")
         def HttpURLConnection connection = url.openConnection()
@@ -84,7 +86,7 @@ class APIReqBuilder implements Serializable {
             connection.setRequestProperty("Authorization", "Basic ${encoded}");
         }*/
 
-        connection.setRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9");
+        connection.setRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9")
         connection.setRequestProperty("content-type", "application/json");
         connection.setRequestMethod(method)
         connection.doOutput = true
