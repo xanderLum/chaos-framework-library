@@ -2,14 +2,13 @@ package utility
 
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
-import com.cloudbees.groovy.cps.NonCPS
 import constants.APIGroovy
 
 class APIReqBuilder {
     static String HTTPS = "https://";
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
-    @NonCPS
+//    @NonCPS
     static def callAPI(script, apiId) {
         String workspace = script.WORKSPACE
         script.sh "echo 'workspace...'"
