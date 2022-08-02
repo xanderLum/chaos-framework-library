@@ -78,10 +78,10 @@ class APIReqBuilder implements Serializable {
 //    def restCall(String method, String resource, String data = '') {
     @NonCPS
     static def restCall(script, String method, String data = '') {
-        script.sh "echo data content: ${data}"
+        println("data content: ${data}")
 //        def URL url = new URL("${Params.REST_BASE_URI}/${resource}")
         def URLstr = "${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}"
-        script.sh "echo urlString: ${URLstr}"
+        println("urlString: ${URLstr}")
         URL url = new URL("${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}")
         HttpURLConnection connection = url.openConnection()
 
@@ -102,21 +102,21 @@ class APIReqBuilder implements Serializable {
             writer.close()
         }
 
-        script.sh "echo connecting..."
+        println("connecting ...")
         connection.connect()
         def statusCode = connection.responseCode
-        script.sh "echo connection statusCode: ${statusCode} "
+        println("connection statusCode: ${statusCode} ")
 
         if (statusCode != 200 && statusCode != 201) {
             String text = connection.getErrorStream().text
-            script.sh "echo connection getErrorStream: ${text}"
+            println("connection getErrorStream: ${text} ")
             connection.disconnect()
             connection = null
             throw new Exception(text)
         }
 
         String text = connection.content.text
-        script.sh "echo 'connection content: '${text}"
+        println("connection content: ${text} ")
         connection.disconnect()
         connection = null
     }

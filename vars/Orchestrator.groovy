@@ -31,11 +31,4 @@ def call(Map config) {
             APIReqBuilder.callAPI(this, APIGroovy.TEST_API.id)
         }
     }
-    post {
-        always {
-            script {
-                println("end!")
-            }
-        }
-    }
 }
