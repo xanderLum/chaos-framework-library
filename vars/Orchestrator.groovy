@@ -25,33 +25,33 @@ def call(Map config) {
             skipDefaultCheckout()
             disableConcurrentBuilds()
         }*/
-        stages {
-            stage('Clean Workspace') {
-                steps {
-                    script {
-                        sh 'rm -rf *'
-                    }
+//        stages {
+        stage('Clean Workspace') {
+            steps {
+                script {
+                    sh 'rm -rf *'
                 }
             }
-
-            stage('Checkout') {
-                steps {
-                    script {
-                        checkout scm
-                    }
-                }
-            }
-            stage('Invoke API Test') {
-                steps {
-                    script {
-                        println("I am in the test api stage")
-                        APIReqBuilder.callAPI this, APIGroovy.TEST_API
-                    }
-                }
-            }
-
-
         }
+
+        stage('Checkout') {
+            steps {
+                script {
+                    checkout scm
+                }
+            }
+        }
+        stage('Invoke API Test') {
+            steps {
+                script {
+                    println("I am in the test api stage")
+                    APIReqBuilder.callAPI this, APIGroovy.TEST_API
+                }
+            }
+        }
+
+
+//        }
     }
     post {
         always {
