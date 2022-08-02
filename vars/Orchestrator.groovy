@@ -12,11 +12,10 @@ def call(Map config) {
     node {
         /*stage('Clean Workspace') {
             sh 'rm -rf *'
-        }*/
-
+        }
         stage('Checkout') {
             checkout scm
-        }
+        }*/
 
         stage("List workspace contents") {
             sh 'ls'
