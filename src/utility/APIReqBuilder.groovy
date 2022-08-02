@@ -8,11 +8,11 @@ class APIReqBuilder {
 
     static def callAPI(script, api) {
 //        println('Calling api: ' + API.apiURL(api));
-        println("Calling api"+API.apiURL(api));
+        println("Calling api"+APIGroovy.apiURL(api));
 //        script.sh "curl -X POST -d '{ \"request\": { \"url\": \"/hello-world\" }, \"response\": { \"body\": \"Hi!\" }}' -H 'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9' https://xander.mocklab.io/__admin/mappings"
         def urlBldr = new StringBuilder();
         urlBldr.append(HTTPS);
-        urlBldr.append(API.TEST_CONTEXT_PATH);
+        urlBldr.append(APIGroovy.TEST_CONTEXT_PATH);
         println ("API test url: "+urlBldr.toString());
         def response = sh(script: 'curl -X POST -d @req.json -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' https://xander.mocklab.io/__admin/mappings', returnStdout: true)
         println ("response : " + response);
