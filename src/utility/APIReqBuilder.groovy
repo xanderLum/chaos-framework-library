@@ -1,6 +1,5 @@
 package utility
 
-import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
@@ -61,7 +60,7 @@ class APIReqBuilder implements Serializable {
         script.sh "echo 'end call'"
     }
 
-    @NonCPS
+//    @NonCPS
     static def getInputJSONReq(script) {
         def form = []
         String workspace = script.WORKSPACE
