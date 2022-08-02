@@ -4,6 +4,7 @@ import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
+import groovy.json.JsonSlurper
 
 class APIReqBuilder implements Serializable {
     static String HTTPS = "https://";
@@ -46,7 +47,7 @@ class APIReqBuilder implements Serializable {
 
         script.sh "echo retrieved inputJSONReq form"
 
-        restCall(script, "POST", form)
+        def response = restCall(script, "POST", form)
         /*postConnection.doOutput = true
         script.sh "echo postConnection doOutput=true"
 
@@ -103,21 +104,27 @@ class APIReqBuilder implements Serializable {
         }
 
         println("connecting ...")
+
         connection.connect()
         def statusCode = connection.responseCode
+        def responseInputStream = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine()
+        def jsonSlurper = new JsonSlurper()
+        def object = jsonSlurper.parseText(responseInputStream)
         println("connection statusCode: ${statusCode} ")
 
         if (statusCode != 200 && statusCode != 201) {
             String text = connection.getErrorStream().text
-            println("connection getErrorStream: ${text} ")
+            def responseErrorStream = new BufferedReader(new InputStreamReader(connection.getErrorStream())).readLine()
+            println("connection getErrorStream: ${responseErrorStream} ")
             connection.disconnect()
             connection = null
-            throw new Exception(text)
+            throw new Exception(responseErrorStream)
         }
 
         String text = connection.content.text
         println("connection content: ${text} ")
         connection.disconnect()
         connection = null
+        return object;
     }
 }
