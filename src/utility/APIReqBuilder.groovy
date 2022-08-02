@@ -50,7 +50,7 @@ class APIReqBuilder {
     }
 
     @NonCPS
-    def getInputJSONReq(script, String workspace) {
+    def getInputJSONReq(script, workspace) {
         def form = []
         new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
         script.sh "echo 'form req json :'${form}"
