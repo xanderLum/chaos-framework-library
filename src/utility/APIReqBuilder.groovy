@@ -1,10 +1,8 @@
 package utility
 
-import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
-import groovy.json.JsonSlurper
 
 class APIReqBuilder implements Serializable {
     static String HTTPS = "https://";
@@ -49,9 +47,9 @@ class APIReqBuilder implements Serializable {
         def call = apiCall(script, "POST", form)
         script.sh "echo apiCall response:  ${call}"
 
-        def response = restCall(script, "POST", form)
+        /*def response = restCall(script, "POST", form)
         script.sh "echo restCall response:  ${response}"
-        /*postConnection.doOutput = true
+        postConnection.doOutput = true
         script.sh "echo postConnection doOutput=true"
 
         def text
@@ -84,11 +82,11 @@ class APIReqBuilder implements Serializable {
     static def apiCall(script, String method, String data) {
         script.sh 'pwd'
         def URLstr = "${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}"
-        def response = script.sh "curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \"${URLstr}\""
+        def response = script.sh "(returnStdout: true, script: 'curl -X ${method} -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \"${URLstr}\"')"
         script.sh "echo response: ${response}"
     }
 
-    @NonCPS
+    /*@NonCPS
     static def restCall(script, String method, String data = '') {
         println("data content: ${data}")
 //        def URL url = new URL("${Params.REST_BASE_URI}/${resource}")
@@ -97,13 +95,13 @@ class APIReqBuilder implements Serializable {
         URL url = new URL("${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}")
         HttpURLConnection connection = url.openConnection()
 
-        /*script.withCredentials([usernamePassword(credentialsId: 'restful-api', passwordVariable: 'RA_PASS', usernameVariable: 'RA_USER')]) {
+        *//*script.withCredentials([usernamePassword(credentialsId: 'restful-api', passwordVariable: 'RA_PASS', usernameVariable: 'RA_USER')]) {
             String encoded = Base64.getEncoder().encodeToString(("${env.RA_USER}:${env.RA_PASS}").getBytes(StandardCharsets.UTF_8))
             connection.setRequestProperty("Authorization", "Basic ${encoded}");
-        }*/
+        }*//*
 
-        /*connection.setRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9")
-        connection.setRequestProperty("content-type", "application/json")*/
+        *//*connection.setRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9")
+        connection.setRequestProperty("content-type", "application/json")*//*
         connection.addRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9")
         connection.addRequestProperty("content-type", "application/json")
         connection.setRequestMethod(method)
@@ -139,5 +137,5 @@ class APIReqBuilder implements Serializable {
         connection.disconnect()
         connection = null
         return object;
-    }
+    }*/
 }
