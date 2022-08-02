@@ -68,22 +68,22 @@ class APIReqBuilder implements Serializable {
 
 //    @NonCPS
     static def getInputJSONReq(script) {
-        def form = []
+        def form = new StringBuilder()
         String workspace = script.WORKSPACE
         script.sh "echo 'executing new File'"
         StringBuilder sb = new StringBuilder()
         sb.append(workspace)
         sb.append('/src/api/input/req.json')
-        new File(sb.toString()).eachLine { line -> form.add(line) }
+        new File(sb.toString()).eachLine { line -> form.append(line) }
         script.sh "echo 'form req json :'${form}"
-        return form
+        return form.toString()
     }
 
 //    def restCall(String method, String resource, String data = '') {
 
     static def apiCall(script, String method, String data) {
         script.sh 'pwd'
-        def response = script.sh "curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \'https://xander.mocklab.io/__admin/mappings\', returnStdout: true"
+        def response = script.sh "curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \"https://xander.mocklab.io/__admin/mappings\", returnStdout: true"
         script.sh "echo response: ${response}"
     }
 
