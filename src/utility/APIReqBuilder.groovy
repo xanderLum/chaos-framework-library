@@ -37,7 +37,7 @@ class APIReqBuilder implements Serializable {
 //        def form = "param1=This is request parameter."
 //        def form = []
 //        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
-        String form = " ${getInputJSONReq(script, workspace)} "
+        String form = " ${getInputJSONReq(script)} "
 
 //        def form = []
 //        script.sh "echo 'executing new File'"
@@ -62,10 +62,14 @@ class APIReqBuilder implements Serializable {
     }
 
     @NonCPS
-    static def getInputJSONReq(script, workspace) {
+    static def getInputJSONReq(script) {
         def form = []
+        String workspace = script.WORKSPACE
         script.sh "echo 'executing new File'"
-        new File(new StringBuilder(String.valueOf(workspace)).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
+        StringBuilder sb = new StringBuilder()
+        sb.append(workspace)
+        sb.append('/src/api/input/req.json')
+        new File(sb.toString()).eachLine { line -> form.add(line) }
         script.sh "echo 'form req json :'${form}"
         return form
     }
@@ -97,8 +101,9 @@ class APIReqBuilder implements Serializable {
 
         def statusCode = connection.responseCode
         if (statusCode != 200 && statusCode != 201) {
+            script.sh "echo 'statusCode: '${statusCode} "
             String text = connection.getErrorStream().text
-            script.sh "echo 'statusCode: ${statusCode} 'connection getErrorStream: '${text}"
+            script.sh "echo 'connection getErrorStream: '${text}"
             connection = null
             throw new Exception(text)
         }
