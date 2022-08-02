@@ -29,7 +29,7 @@ class APIReqBuilder {
         def postmanPost = new URL(urlBldr.toString());
         def postConnection = postmanPost.openConnection()
 //        def form = "param1=This is request parameter."
-        def form = [] new File(new StringBuilder(workspace).append('/src/api/input/req.json')).eachLine { line -> form.add(line) }
+        def form = [] new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
         postConnection.doOutput = true
         def text
         postConnection.with {
