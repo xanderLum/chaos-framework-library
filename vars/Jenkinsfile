@@ -5,7 +5,7 @@
 Orchestrator(
     [
         numBuildToKeep: '5',
-        param: 'test',
+        param: 'test'
     ]
 )
 
