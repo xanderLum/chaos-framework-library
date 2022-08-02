@@ -27,7 +27,7 @@ def call(Map config) {
         }*/
 //        stages {
         stage('Clean Workspace') {
-            steps {
+            step {
                 script {
                     sh 'rm -rf *'
                 }
@@ -35,14 +35,14 @@ def call(Map config) {
         }
 
         stage('Checkout') {
-            steps {
+            step {
                 script {
                     checkout scm
                 }
             }
         }
         stage('Invoke API Test') {
-            steps {
+            step {
                 script {
                     println("I am in the test api stage")
                     APIReqBuilder.callAPI this, APIGroovy.TEST_API
