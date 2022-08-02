@@ -1,5 +1,6 @@
 package utility
 
+import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
@@ -8,7 +9,6 @@ class APIReqBuilder {
     static String HTTPS = "https://";
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
-//    @NonCPS
     static def callAPI(script, apiId) {
         String workspace = script.WORKSPACE
         script.sh "echo 'workspace...'"
@@ -33,8 +33,9 @@ class APIReqBuilder {
         postConnection.requestMethod = 'POST'
 
 //        def form = "param1=This is request parameter."
-        def form = []
-        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
+//        def form = []
+//        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
+        def form = getInputJSONReq(script, workspace)
         postConnection.doOutput = true
         def text
         postConnection.with {
@@ -46,5 +47,13 @@ class APIReqBuilder {
         assert postConnection.responseCode == 200
         script.sh "echo 'response: '${postConnection.responseCode}"
         return postConnection.responseCode;
+    }
+
+    @NonCPS
+    def getInputJSONReq(script, String workspace) {
+        def form = []
+        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
+        script.sh "echo 'form req json :'${form}"
+        return form
     }
 }
