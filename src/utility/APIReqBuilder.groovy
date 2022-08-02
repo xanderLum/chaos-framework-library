@@ -7,16 +7,14 @@ class APIReqBuilder {
     static String HTTPS = "https://";
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
-    static def callAPI(apiId) {
-        echo("printing pwd from callAPI echo: " + pwd())
-        println("printing pwd from callAPI println: " + pwd())
-        echo("Calling api from echo" + APIGroovy.getApiEnum(apiId))
-        println("Calling api from println" + APIGroovy.getApiEnum(apiId))
+    static def callAPI(script, apiId) {
+        script.sh "echo 'pwd...' ${pwd()}"
+        script.sh "echo 'Calling api '${APIGroovy.getApiEnum(apiId)}"
 //        script.sh "curl -X POST -d '{ \"request\": { \"url\": \"/hello-world\" }, \"response\": { \"body\": \"Hi!\" }}' -H 'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9' https://xander.mocklab.io/__admin/mappings"
         def urlBldr = new StringBuilder()
         urlBldr.append(HTTPS)
         urlBldr.append(APIGroovy.TEST_CONTEXT_PATH.apiURL)
-        println("API test url: " + urlBldr.toString())
+        script.sh "echo 'API test url: '${urlBldr.toString()}"
         /*def response = sh(script: 'curl -X POST -d @req.json -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' https://xander.mocklab.io/__admin/mappings', returnStdout: true)
         def postmanPost = new URL('https://xander.mocklab.io/__admin/mappings')
         def postConnection = postmanPost.openConnection()
@@ -27,7 +25,7 @@ class APIReqBuilder {
         def postmanPost = new URL(urlBldr.toString());
         def postConnection = postmanPost.openConnection()
 //        def form = "param1=This is request parameter."
-        def form = [] new File('/src/api/input/req.json').eachLine { line -> form.add(line) }
+        def form = [] new File('src/api/input/req.json').eachLine { line -> form.add(line) }
         postConnection.doOutput = true
         def text
         postConnection.with {
@@ -37,8 +35,7 @@ class APIReqBuilder {
             text = content.text
         }
         assert postConnection.responseCode == 200
-
-        println("response : " + postConnection.responseCode);
+        script.sh "echo 'response: '${postConnection.responseCode}"
         return postConnection.responseCode;
     }
 }

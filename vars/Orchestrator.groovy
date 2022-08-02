@@ -26,7 +26,7 @@ def call(Map config) {
         stage('Invoke API Test') {
             println("I am in the test api stage")
             println("printing pwd: " + pwd())
-            APIReqBuilder.callAPI(APIGroovy.TEST_API.id)
+            APIReqBuilder.callAPI(this, APIGroovy.TEST_API.id)
         }
     }
     post {
