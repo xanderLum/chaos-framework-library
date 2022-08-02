@@ -1,6 +1,5 @@
 package utility
 
-import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
@@ -62,7 +61,7 @@ class APIReqBuilder implements Serializable {
         script.sh "echo 'end call'"
     }
 
-    @NonCPS
+//    @NonCPS
     static def getInputJSONReq(script) {
         def form = []
         String workspace = script.WORKSPACE
@@ -77,10 +76,12 @@ class APIReqBuilder implements Serializable {
 
 //    def restCall(String method, String resource, String data = '') {
     static def restCall(script, String method, String data = '') {
-        script.sh "echo 'data content: '${data}"
+        script.sh "echo data content: ${data}"
 //        def URL url = new URL("${Params.REST_BASE_URI}/${resource}")
-        def URL url = new URL("${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}")
-        def HttpURLConnection connection = url.openConnection()
+        def URLstr = "${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}"
+        script.sh "echo urlString: ${URLstr}"
+        URL url = new URL("${HTTPS}${APIGroovy.TEST_CONTEXT_PATH.apiURL}${APIGroovy.TEST_API.apiURL}")
+        HttpURLConnection connection = url.openConnection()
 
         /*script.withCredentials([usernamePassword(credentialsId: 'restful-api', passwordVariable: 'RA_PASS', usernameVariable: 'RA_USER')]) {
             String encoded = Base64.getEncoder().encodeToString(("${env.RA_USER}:${env.RA_PASS}").getBytes(StandardCharsets.UTF_8))
@@ -88,7 +89,7 @@ class APIReqBuilder implements Serializable {
         }*/
 
         connection.setRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9")
-        connection.setRequestProperty("content-type", "application/json");
+        connection.setRequestProperty("content-type", "application/json")
         connection.setRequestMethod(method)
         connection.doOutput = true
 
@@ -99,19 +100,22 @@ class APIReqBuilder implements Serializable {
             writer.close()
         }
 
-        connection.connect();
-
+        script.sh "echo connecting..."
+        connection.connect()
         def statusCode = connection.responseCode
+        script.sh "echo connection statusCode: ${statusCode} "
+
         if (statusCode != 200 && statusCode != 201) {
-            script.sh "echo 'statusCode: '${statusCode} "
             String text = connection.getErrorStream().text
-            script.sh "echo 'connection getErrorStream: '${text}"
+            script.sh "echo connection getErrorStream: ${text}"
+            connection.disconnect()
             connection = null
             throw new Exception(text)
         }
 
         String text = connection.content.text
         script.sh "echo 'connection content: '${text}"
+        connection.disconnect()
         connection = null
     }
 }
