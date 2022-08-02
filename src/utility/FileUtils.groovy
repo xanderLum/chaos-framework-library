@@ -5,7 +5,8 @@ class FileUtils {
     static String FILEPARAM = "request.zip"
 
     static def processFileParam(script) {
-        script.sh 'whereami pwd'
+        println "whereami pwd"
+
         script.withFileParameter(FILEPARAM) {
             script.sh 'ls -lrt'
         }
