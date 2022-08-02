@@ -35,7 +35,7 @@ class APIReqBuilder implements Serializable {
 //        def form = "param1=This is request parameter."
 //        def form = []
 //        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
-        String form = "${getInputJSONReq(script, workspace)}"
+        def form = "${getInputJSONReq(script, workspace)}"
         postConnection.doOutput = true
         def text
         postConnection.with {
@@ -49,7 +49,7 @@ class APIReqBuilder implements Serializable {
         return postConnection.responseCode;
     }
 
-    @NonCPS
+//    @NonCPS
     static def getInputJSONReq(script, workspace) {
         def form = []
         script.sh "echo 'executing new File"
