@@ -5,7 +5,7 @@ import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
 
-class APIReqBuilder {
+class APIReqBuilder implements Serializable {
     static String HTTPS = "https://";
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
@@ -35,7 +35,7 @@ class APIReqBuilder {
 //        def form = "param1=This is request parameter."
 //        def form = []
 //        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
-        def form = "${getInputJSONReq(script, workspace)}"
+        String form = "${getInputJSONReq(script, workspace)}"
         postConnection.doOutput = true
         def text
         postConnection.with {
@@ -50,8 +50,8 @@ class APIReqBuilder {
     }
 
     @NonCPS
-    static def getInputJSONReq(script, workspace) {
-        def form = []
+    static String getInputJSONReq(script, workspace) {
+        String form = []
         new File(new StringBuilder(String.valueOf(workspace)).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
         script.sh "echo 'form req json :'${form}"
         return form
