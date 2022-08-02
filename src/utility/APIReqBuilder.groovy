@@ -1,6 +1,5 @@
 package utility
 
-import com.cloudbees.groovy.cps.NonCPS
 @Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
 @Grab(group = 'com.cloudbees', module = 'groovy-cps', version = '1.24')
 import constants.APIGroovy
@@ -28,15 +27,21 @@ class APIReqBuilder implements Serializable {
         assert postConnection.responseCode == 200*/
 
         def postmanPost = new URL(urlBldr.toString());
-
+        script.sh "echo postmanPost new URL "
         def postConnection = postmanPost.openConnection()
+        script.sh "echo postConnection open"
         postConnection.requestMethod = 'POST'
+        script.sh "echo set postConnection requestMethod POST.. getting inputJSONReq..."
 
 //        def form = "param1=This is request parameter."
 //        def form = []
 //        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
-        def form = "${getInputJSONReq(script, workspace)}"
+        def form = $ { getInputJSONReq(script, workspace) }
+
+        script.sh "echo retrieved inputJSONReq form"
         postConnection.doOutput = true
+        script.sh "echo postConnection doOutput=true"
+
         def text
         postConnection.with {
             outputStream.withWriter { outputStreamWriter ->
