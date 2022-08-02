@@ -36,7 +36,7 @@ class APIReqBuilder implements Serializable {
 //        def form = "param1=This is request parameter."
 //        def form = []
 //        new File(new StringBuilder(workspace).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
-        String form = $ { getInputJSONReq(script, workspace) }
+        String form = " ${getInputJSONReq(script, workspace)} "
 
         script.sh "echo retrieved inputJSONReq form"
         restCall(script, "POST", form)
