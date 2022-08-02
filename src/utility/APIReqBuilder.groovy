@@ -98,6 +98,7 @@ class APIReqBuilder implements Serializable {
         def statusCode = connection.responseCode
         if (statusCode != 200 && statusCode != 201) {
             String text = connection.getErrorStream().text
+            script.sh "echo 'statusCode: ${statusCode} 'connection getErrorStream: '${text}"
             connection = null
             throw new Exception(text)
         }
