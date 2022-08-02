@@ -21,6 +21,7 @@ def call(Map config) {
         stage("List workspace contents") {
             sh 'ls'
             sh "echo reqFile locate: ${FileUtils.FILEPARAM}"
+            sh "ls ${FileUtils.FILEPARAM}"
         }
 
         stage("Process File parameter") {
