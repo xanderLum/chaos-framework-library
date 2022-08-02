@@ -50,9 +50,10 @@ class APIReqBuilder implements Serializable {
     }
 
     @NonCPS
-    static String getInputJSONReq(script, workspace) {
-        String form = []
-        new File(new StringBuilder(String.valueOf(workspace)).append('/src/api/input/req.json').toString()).eachLine { line -> form.concat(line) }
+    static def getInputJSONReq(script, workspace) {
+        def form = []
+        script.sh "echo 'executing new File"
+        new File(new StringBuilder(String.valueOf(workspace)).append('/src/api/input/req.json').toString()).eachLine { line -> form.add(line) }
         script.sh "echo 'form req json :'${form}"
         return form
     }
