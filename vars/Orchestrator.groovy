@@ -13,7 +13,7 @@ def call() {
 return this*/
 
 def call(Map config) {
-    pipeline {
+    node {
         stage('Clean Workspace') {
             sh 'rm -rf *'
         }
