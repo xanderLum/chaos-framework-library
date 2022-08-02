@@ -46,9 +46,11 @@ class APIReqBuilder implements Serializable {
 //        script.sh "echo 'form req json :'${form}'"
 
         script.sh "echo retrieved inputJSONReq form"
+        def call = apiCall(script, "POST", form)
+        script.sh "echo apiCall response:  ${call}"
 
         def response = restCall(script, "POST", form)
-        script.sh "echo response:  ${response}"
+        script.sh "echo restCall response:  ${response}"
         /*postConnection.doOutput = true
         script.sh "echo postConnection doOutput=true"
 
@@ -78,6 +80,13 @@ class APIReqBuilder implements Serializable {
     }
 
 //    def restCall(String method, String resource, String data = '') {
+
+    static def apiCall(script, String method, String data) {
+        script.sh 'pwd'
+        def response = script.sh('curl -X POST -d @req.json -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' https://xander.mocklab.io/__admin/mappings', returnStdout: true)
+        script.sh "echo response: ${response}"
+    }
+
     @NonCPS
     static def restCall(script, String method, String data = '') {
         println("data content: ${data}")
