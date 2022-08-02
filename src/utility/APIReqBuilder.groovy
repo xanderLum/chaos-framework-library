@@ -8,7 +8,8 @@ class APIReqBuilder {
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
     static def callAPI(script, apiId) {
-        script.sh "echo 'pwd...' ${pwd()}"
+        script.sh "echo 'pwd...'"
+        script.sh "pwd()"
         script.sh "echo 'Calling api '${APIGroovy.getApiEnum(apiId)}"
 //        script.sh "curl -X POST -d '{ \"request\": { \"url\": \"/hello-world\" }, \"response\": { \"body\": \"Hi!\" }}' -H 'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9' https://xander.mocklab.io/__admin/mappings"
         def urlBldr = new StringBuilder()
