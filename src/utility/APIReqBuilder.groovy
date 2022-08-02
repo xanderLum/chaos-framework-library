@@ -48,6 +48,7 @@ class APIReqBuilder implements Serializable {
         script.sh "echo retrieved inputJSONReq form"
 
         def response = restCall(script, "POST", form)
+        script.sh "echo response:  ${response}"
         /*postConnection.doOutput = true
         script.sh "echo postConnection doOutput=true"
 
@@ -91,8 +92,10 @@ class APIReqBuilder implements Serializable {
             connection.setRequestProperty("Authorization", "Basic ${encoded}");
         }*/
 
-        connection.setRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9")
-        connection.setRequestProperty("content-type", "application/json")
+        /*connection.setRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9")
+        connection.setRequestProperty("content-type", "application/json")*/
+        connection.addRequestProperty("Authorization", "Token 0418bfa3937504586f4a0ea80c9fffb9")
+        connection.addRequestProperty("content-type", "application/json")
         connection.setRequestMethod(method)
         connection.doOutput = true
 
@@ -106,7 +109,7 @@ class APIReqBuilder implements Serializable {
         println("connecting ...")
 
         connection.connect()
-        def statusCode = connection.responseCode
+        def statusCode = connection.getResponseCode()
         def responseInputStream = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine()
         def jsonSlurper = new JsonSlurper()
         def object = jsonSlurper.parseText(responseInputStream)
