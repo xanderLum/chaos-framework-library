@@ -131,9 +131,8 @@ def apiCall(String url, String method, String data) {
     println(" Invoking API url:  ${url} ")
     println(" Invoking API method: ${method} ")
     println(" Invoking API data:  ${data} ")
-    def response = sh(returnStdout: true, script: "curl -X ${method} -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' ${url}")
-
-    sh "echo apiCall response: ${response}"
+    def response = sh(returnStdout: true, script: "curl -X ${method} -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' ${url}").trim()
+    echo "${response}"
 }
 
 def urlBuilder(String contextPath, String apiURL, String host) {
