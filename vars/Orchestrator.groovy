@@ -47,7 +47,7 @@ def call(Map config) {
                 }
                 println "END INVOKE API TEST"
             } else {
-                println "No request file found. API Test"
+                println "No request file found. Skip API Test"
             }
         }
 
@@ -64,7 +64,7 @@ def call(Map config) {
                 }
                 println "END INVOKE CPU FAULT"
             } else {
-                println "No request file found. CPU FAULT"
+                println "No request file found. Skip CPU FAULT"
             }
         }
 
@@ -81,7 +81,7 @@ def call(Map config) {
                 }
                 println "END INVOKE MEMORY FAULT"
             } else {
-                println "No request file found. MEMORY FAULT"
+                println "No request file found. Skip MEMORY FAULT"
             }
         }
 
@@ -98,7 +98,7 @@ def call(Map config) {
                 }
                 println "END INVOKE DISK-IO FAULT"
             } else {
-                println "No request file found. DISK-IO FAULT"
+                println "No request file found. Skip DISK-IO FAULT"
             }
         }
 
@@ -129,10 +129,14 @@ def apiCall(String url, String method, String data) {
 }
 
 def urlBuilder(String contextPath, String apiURL, String host) {
-    if (host != '') {
-        return "${APIReqBuilder.HTTPS}${host}${contextPath}${apiURL}"
+    if (host != null) {
+        def url = "${APIReqBuilder.HTTPS}${host}${contextPath}${apiURL}"
+        sh "echo url: ${url}"
+        return "${url}"
+    } else {
+        def url = "${APIReqBuilder.HTTPS}${contextPath}${apiURL}"
+        sh "echo url: ${url}"
+        return "${url}"
     }
-
-    return "${APIReqBuilder.HTTPS}${contextPath}${apiURL}"
 }
 
