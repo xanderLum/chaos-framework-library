@@ -1,13 +1,15 @@
 package vars
 
-
 import constants.APIGroovy
 import utility.APIReqBuilder
 import utility.FileUtils
 
-@Grab(group = 'com.github.groovy-wslite', module = 'groovy-wslite', version = '1.1.3')
-
-
+/**
+ * Ochestrator main
+ *
+ * @param config
+ * @return
+ */
 def call(Map config) {
     node {
         stage('Clean Workspace') {
@@ -46,7 +48,7 @@ def call(Map config) {
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.TEST_CONTEXT_PATH.apiURL, APIGroovy.TEST_API.apiURL, null),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}", APIGroovy.TEST_API.id))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}"))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -63,7 +65,7 @@ def call(Map config) {
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.CPU_FAULT_API.reqFile, APIGroovy.CPU_FAULT_API.id))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.CPU_FAULT_API.reqFile))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -80,7 +82,7 @@ def call(Map config) {
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.MEMORY_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.MEMORY_FAULT_API.reqFile, APIGroovy.MEMORY_FAULT_API.id))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.MEMORY_FAULT_API.reqFile))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -97,7 +99,7 @@ def call(Map config) {
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_IO_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.DISK_IO_FAULT_API.reqFile, APIGroovy.DISK_IO_FAULT_API.id))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.DISK_IO_FAULT_API.reqFile))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -114,7 +116,7 @@ def call(Map config) {
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_SPACE_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.DISK_SPACE_FAULT_API.reqFile, APIGroovy.DISK_SPACE_FAULT_API.id))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.DISK_SPACE_FAULT_API.reqFile))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -126,6 +128,14 @@ def call(Map config) {
     }
 }
 
+/**
+ * Execute API call
+ *
+ * @param url
+ * @param method
+ * @param data
+ * @return
+ */
 def apiCall(String url, String method, String data) {
     sh 'pwd'
     println(" Invoking API url:  ${url} ")
@@ -135,6 +145,14 @@ def apiCall(String url, String method, String data) {
     echo "${response}"
 }
 
+/**
+ * Build URL of the API
+ *
+ * @param contextPath
+ * @param apiURL
+ * @param host
+ * @return
+ */
 def urlBuilder(String contextPath, String apiURL, String host) {
     if (host != null) {
         def url = "${APIReqBuilder.HTTPS}${host}${contextPath}${apiURL}"

@@ -5,6 +5,13 @@ class FileUtils {
     static String FILEPARAM = "request.zip"
     static String FOLDER = "request"
 
+    /**
+     * Process File Parameter request.zip file containing:
+     * *-req.json files for different type of fault injection API requests
+     *
+     * @param script
+     * @return
+     */
     static def processFileParam(script) {
         script.sh 'echo whereami'
         script.sh 'pwd'
@@ -24,6 +31,13 @@ class FileUtils {
         }
     }
 
+    /**
+     * Check Faults to be executed
+     *
+     * @param script
+     * @param folder
+     * @return
+     */
     static def determineFaults(script, folder) {
         def foundFiles = script.sh(script: "ls -1 ${folder}", returnStdout: true).split()
         return foundFiles
