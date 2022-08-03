@@ -17,10 +17,14 @@ def call(Map config) {
             checkout scm
         }*/
 
-        stage("upload") {
-            def inputFile = input message: 'Upload file', parameters: [file(name: 'request.zip')]
-            new hudson.FilePath(new File("$workspace/request.zip")).copyFrom(inputFile)
-            inputFile.delete()
+        stage("Upload Request.zip file (*-req.json)") {
+            def inputFile = input message: 'Please provide a file', parameters: [base64File('file')]
+            withEnv(["fileBase64=$inputFile"]) {
+                sh 'echo $fileBase64 | base64 -d > request.zip'
+                sh 'ls'
+            }
+//            new hudson.FilePath(new File("$workspace/request.zip")).copyFrom(inputFile)
+//            inputFile.delete()
         }
 
         stage("List workspace contents") {
