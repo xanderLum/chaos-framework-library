@@ -9,7 +9,8 @@ class APIReqBuilder implements Serializable {
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
     static def dataReqBuilder(script, reqFile, id) {
-        script.sh 'whereami pwd'
+        script.sh 'echo whereami'
+        script.sh 'pwd'
         script.sh 'ls -lrt'
         println "reqFile : ${reqFile}"
 

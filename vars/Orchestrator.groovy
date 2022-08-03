@@ -35,16 +35,88 @@ def call(Map config) {
         }
 
         stage('Invoke API Test') {
-            println "START INVOKE API TEST"
-            println "whereami pwd() "
-//            def data = APIReqBuilder.dataReqBuilder(this, APIGroovy.TEST_API.reqFile, APIGroovy.TEST_API.id)
-            try {
-                apiCall(urlBuilder(APIGroovy.TEST_CONTEXT_PATH.apiURL, APIGroovy.TEST_API.apiURL), "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.TEST_API.reqFile, APIGroovy.TEST_API.id))
-            } catch (Exception e) {
-                println e.getMessage()
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}")) {
+                println "START INVOKE API TEST"
+                println "whereami"
+                println "pwd"
+                try {
+                    apiCall(urlBuilder(APIGroovy.TEST_CONTEXT_PATH.apiURL, APIGroovy.TEST_API.apiURL, null),
+                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.TEST_API.reqFile, APIGroovy.TEST_API.id))
+                } catch (Exception e) {
+                    println e.getMessage()
+                }
+                println "END INVOKE API TEST"
+            } else {
+                println "No request file found. API Test"
             }
+        }
 
-            println "END INVOKE API TEST"
+        stage('Invoke CPU Fault') {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.CPU_FAULT_API.reqFile}")) {
+                println "START INVOKE CPU FAULT"
+                println "whereami"
+                println "pwd"
+                try {
+                    apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, APIReqBuilder.IP),
+                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.CPU_FAULT_API.reqFile, APIGroovy.CPU_FAULT_API.id))
+                } catch (Exception e) {
+                    println e.getMessage()
+                }
+                println "END INVOKE CPU FAULT"
+            } else {
+                println "No request file found. CPU FAULT"
+            }
+        }
+
+        stage('Invoke Memory Fault') {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.MEMORY_FAULT_API.reqFile}")) {
+                println "START INVOKE MEMORY FAULT"
+                println "whereami"
+                println "pwd"
+                try {
+                    apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.MEMORY_FAULT_API.apiURL, APIReqBuilder.IP),
+                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.MEMORY_FAULT_API.reqFile, APIGroovy.MEMORY_FAULT_API.id))
+                } catch (Exception e) {
+                    println e.getMessage()
+                }
+                println "END INVOKE MEMORY FAULT"
+            } else {
+                println "No request file found. MEMORY FAULT"
+            }
+        }
+
+        stage('Invoke DISK-IO Fault') {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_IO_FAULT_API.reqFile}")) {
+                println "START INVOKE DISK-IO FAULT"
+                println "whereami"
+                println "pwd"
+                try {
+                    apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_IO_FAULT_API.apiURL, APIReqBuilder.IP),
+                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.DISK_IO_FAULT_API.reqFile, APIGroovy.DISK_IO_FAULT_API.id))
+                } catch (Exception e) {
+                    println e.getMessage()
+                }
+                println "END INVOKE DISK-IO FAULT"
+            } else {
+                println "No request file found. DISK-IO FAULT"
+            }
+        }
+
+        stage('Invoke DISK-SPACE Fault') {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_SPACE_FAULT_API.reqFile}")) {
+                println "START INVOKE DISK-SPACE FAULT"
+                println "whereami"
+                println "pwd"
+                try {
+                    apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_SPACE_FAULT_API.apiURL, APIReqBuilder.IP),
+                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.DISK_SPACE_FAULT_API.reqFile, APIGroovy.DISK_SPACE_FAULT_API.id))
+                } catch (Exception e) {
+                    println e.getMessage()
+                }
+                println "END INVOKE DISK-SPACE FAULT"
+            } else {
+                println "No request file found. DISK-SPACE FAULT"
+            }
         }
     }
 }
@@ -56,7 +128,11 @@ def apiCall(String url, String method, String data) {
     script.sh "apiCall response: ${response}"
 }
 
-def urlBuilder(String contextPath, String apiURL) {
+def urlBuilder(String contextPath, String apiURL, String host) {
+    if (host != '') {
+        return "${APIReqBuilder.HTTPS}${host}${contextPath}${apiURL}"
+    }
+
     return "${APIReqBuilder.HTTPS}${contextPath}${apiURL}"
 }
 

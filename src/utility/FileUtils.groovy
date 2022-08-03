@@ -3,12 +3,14 @@ package utility
 class FileUtils {
 
     static String FILEPARAM = "request.zip"
-    static String FOLDER = "request/"
+    static String FOLDER = "request"
 
     static def processFileParam(script) {
-        script.sh "echo pwd"
+        script.sh 'echo whereami'
+        script.sh 'pwd'
 
         if (script.fileExists(file: "${FILEPARAM}")) {
+            script.sh "echo Fileparam exist!"
             script.sh "echo unzipping... ${FILEPARAM}"
             script.sh "unzip ${FILEPARAM}"
             script.sh 'ls'
