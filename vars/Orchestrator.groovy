@@ -123,9 +123,10 @@ def call(Map config) {
 
 def apiCall(String url, String method, String data) {
     sh 'pwd'
-    def response = sh(returnStdout: true, script: 'curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \"${url}\"')
+    sh "echo Invoking API [ url: ${url} ; method: ${method} ; data: ${data} ]"
+    def response = sh(returnStdout: true, script: 'curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' ${url}')
 
-    script.sh "apiCall response: ${response}"
+    sh "apiCall response: ${response}"
 }
 
 def urlBuilder(String contextPath, String apiURL, String host) {
