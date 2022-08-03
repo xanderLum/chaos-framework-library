@@ -22,7 +22,7 @@ class APIReqBuilder implements Serializable {
             StringBuilder sb = new StringBuilder()
             sb.append(workspace + "/")
             sb.append("${reqFile}")
-            new File(sb.toString()).eachLine { line -> form.append(line) }
+            new File(sb.toString()).eachLine() { line -> form.append(line) }
             /*new File(sb.toString()).withReader { reader ->
                 while ((line = reader.readLine()) != null) {
                     form.append(line)
