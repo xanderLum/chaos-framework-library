@@ -18,11 +18,16 @@ class APIReqBuilder implements Serializable {
             script.sh "echo reqFile exist! for API: ${id}"
             def form = new StringBuilder()
             String workspace = script.WORKSPACE
-            script.sh "echo 'executing new File'"
             StringBuilder sb = new StringBuilder()
             sb.append(workspace + "/")
             sb.append("${reqFile}")
-            new File(sb.toString()).eachLine() { line -> form.append(line) }
+//            new File(sb.toString()).eachLine() { line -> form.append(line) }
+            script.sh "echo reqFile path: ${sb.toString()}"
+            new File(sb.toString()).withInputStream { stream ->
+                stream.eachLine { line ->
+                    form.append(line)
+                }
+            }
             /*new File(sb.toString()).withReader { reader ->
                 while ((line = reader.readLine()) != null) {
                     form.append(line)
