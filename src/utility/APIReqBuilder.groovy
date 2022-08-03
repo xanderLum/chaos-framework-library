@@ -12,7 +12,7 @@ class APIReqBuilder implements Serializable {
         script.sh 'echo whereami'
         script.sh 'pwd'
         script.sh 'ls -lrt'
-        println "reqFile : ${reqFile}"
+        script.sh "echo reqFile : ${reqFile}"
 
         if (script.fileExists(file: reqFile)) {
             def form = new StringBuilder()

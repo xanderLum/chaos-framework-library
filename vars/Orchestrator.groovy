@@ -41,7 +41,7 @@ def call(Map config) {
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.TEST_CONTEXT_PATH.apiURL, APIGroovy.TEST_API.apiURL, null),
-                            "POST", APIReqBuilder.dataReqBuilder(this, APIGroovy.TEST_API.reqFile, APIGroovy.TEST_API.id))
+                            "POST", APIReqBuilder.dataReqBuilder(this, "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}", APIGroovy.TEST_API.id))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -126,7 +126,7 @@ def apiCall(String url, String method, String data) {
     println(" Invoking API url:  ${url} ")
     println(" Invoking API method: ${method} ")
     println(" Invoking API data:  ${data} ")
-    def response = sh(returnStdout: true, script: 'curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' ${url}')
+    def response = sh(returnStdout: true, script: 'curl -X POST -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' \'${url}\'')
 
     sh "apiCall response: ${response}"
 }
