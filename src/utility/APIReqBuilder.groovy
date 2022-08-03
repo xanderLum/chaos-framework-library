@@ -23,7 +23,7 @@ class APIReqBuilder implements Serializable {
             sb.append(workspace)
             sb.append('/src/api/input/req.json')
             new File(sb.toString()).eachLine { line -> form.append(line) }*/
-            reqFile.withReader { reader ->
+            new File("${reqFile}").withReader { reader ->
                 while ((line = reader.readLine()) != null) {
                     form.append(line)
                 }

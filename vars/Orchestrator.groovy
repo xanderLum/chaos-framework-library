@@ -20,7 +20,12 @@ def call(Map config) {
         stage("Upload Request.zip file (*-req.json)") {
             def inputFile = input message: 'Please provide a file', parameters: [base64File('file')]
             withEnv(["fileBase64=$inputFile"]) {
-                sh 'echo $fileBase64 | base64 -d > request.zip'
+                if ($fileBase64 != '') {
+                    sh 'echo $fileBase64 | base64 -d > request.zip'
+                } else {
+                    sh 'echo required file not provided.  throw error'
+                    throw new Exception("required request.zip file not provided.  throw error")
+                }
             }
         }
 
