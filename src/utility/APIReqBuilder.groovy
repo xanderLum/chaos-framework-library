@@ -11,20 +11,20 @@ class APIReqBuilder implements Serializable {
 
     @NonCPS
     static def dataReqBuilder(script, reqFile, id) {
-        script.sh 'echo whereami'
+        /*script.sh 'echo whereami'
         script.sh 'pwd'
         script.sh 'ls -lrt'
-        script.sh "echo reqFile : ${reqFile}"
+        script.sh "echo reqFile : ${reqFile}"*/
 
         if (script.fileExists(file: "${reqFile}")) {
-            script.sh "echo reqFile exist! for API: ${id}"
+//            script.sh "echo reqFile exist! for API: ${id}"
             def form = new StringBuilder()
             String workspace = script.WORKSPACE
             StringBuilder sb = new StringBuilder()
             sb.append(workspace + "/")
             sb.append("${reqFile}")
 //            new File(sb.toString()).eachLine() { line -> form.append(line) }
-            script.sh "echo reqFile path: ${sb.toString()}"
+//            script.sh "echo reqFile path: ${sb.toString()}"
             new File(sb.toString()).withInputStream { stream ->
                 stream.eachLine { line ->
                     form.append(line)
@@ -36,12 +36,12 @@ class APIReqBuilder implements Serializable {
                 }
             }*/
 //            reqFile.eachLine { line -> form.append(line) }
-            script.sh "echo data : ${form.toString()}"
+//            script.sh "echo data : ${form.toString()}"
             return form.toString()
-        } else {
+        } /*else {
             script.sh "echo reqFile doesn't exist! for API: ${id}"
             return
-        }
+        }*/
     }
 
     static def callAPI(script, apiId) {
