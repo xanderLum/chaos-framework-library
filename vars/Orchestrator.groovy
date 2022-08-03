@@ -10,12 +10,12 @@ import utility.FileUtils
 
 def call(Map config) {
     node {
-        /*stage('Clean Workspace') {
+        stage('Clean Workspace') {
             sh 'rm -rf *'
         }
         stage('Checkout') {
             checkout scm
-        }*/
+        }
 
         stage("Upload Request.zip file (*-req.json)") {
             def inputFile = input message: 'Please provide a file', parameters: [base64File('file')]
