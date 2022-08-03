@@ -46,7 +46,7 @@ def call(Map config) {
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.TEST_CONTEXT_PATH.apiURL, APIGroovy.TEST_API.apiURL, null),
-                            "POST", APIReqBuilder.dataReqBuilder(this, "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}", APIGroovy.TEST_API.id))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}", APIGroovy.TEST_API.id))
                 } catch (Exception e) {
                     println e.getMessage()
                 }

@@ -10,38 +10,38 @@ class APIReqBuilder implements Serializable {
     static String IP = "10.11.57.125"; //change to variable in pipeline
 
     @NonCPS
-    static def dataReqBuilder(script, reqFile, id) {
+    static def dataReqBuilder(String workspace, reqFile, id) {
         /*script.sh 'echo whereami'
         script.sh 'pwd'
         script.sh 'ls -lrt'
         script.sh "echo reqFile : ${reqFile}"*/
 
-        if (script.fileExists(file: "${reqFile}")) {
+//        if (script.fileExists(file: "${reqFile}")) {
 //            script.sh "echo reqFile exist! for API: ${id}"
-            def form = new StringBuilder()
-            String workspace = script.WORKSPACE
-            StringBuilder sb = new StringBuilder()
-            sb.append(workspace + "/")
-            sb.append("${reqFile}")
+        def form = new StringBuilder()
+//        String workspace = script.WORKSPACE
+        StringBuilder sb = new StringBuilder()
+        sb.append(workspace + "/")
+        sb.append("${reqFile}")
 //            new File(sb.toString()).eachLine() { line -> form.append(line) }
 //            script.sh "echo reqFile path: ${sb.toString()}"
-            new File(sb.toString()).withInputStream { stream ->
-                stream.eachLine { line ->
-                    form.append(line)
-                }
+        new File(sb.toString()).withInputStream { stream ->
+            stream.eachLine { line ->
+                form.append(line)
             }
-            /*new File(sb.toString()).withReader { reader ->
-                while ((line = reader.readLine()) != null) {
-                    form.append(line)
-                }
-            }*/
+        }
+        /*new File(sb.toString()).withReader { reader ->
+            while ((line = reader.readLine()) != null) {
+                form.append(line)
+            }
+        }*/
 //            reqFile.eachLine { line -> form.append(line) }
 //            script.sh "echo data : ${form.toString()}"
-            return form.toString()
-        } /*else {
-            script.sh "echo reqFile doesn't exist! for API: ${id}"
-            return
-        }*/
+        return form.toString()
+        /* } else {
+             script.sh "echo reqFile doesn't exist! for API: ${id}"
+             return
+         }*/
     }
 
     static def callAPI(script, apiId) {
