@@ -11,7 +11,7 @@ import utility.FileUtils
  * @return
  */
 def call(Map config) {
-    node {
+    pipeline {
         stage('Clean Workspace') {
             sh 'rm -rf *'
         }
@@ -47,8 +47,9 @@ def call(Map config) {
             echo "params is 'Memory' selected? : ${params.Memory}"
             echo "params is 'Disk-IO' selected? : ${params.DiskIO}"
             echo "params is 'Diskspace' selected? : ${params.Diskspace}"
+            echo "params is 'TEST' selected? : ${params.TEST}"
         }
-        
+
         stage('Invoke API Test') {
             when {
                 // Only execute this stage when selected ALL or TEST is TRUE
