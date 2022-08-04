@@ -19,7 +19,7 @@ def call(Map config) {
             checkout scm
         }
 
-        stage("Upload Request.zip file (*-req.json)") {
+        /*stage("Upload Request.zip file (*-req.json)") {
             def inputFile = input message: 'Please provide a file', parameters: [base64File('file')]
             withEnv(["fileBase64=$inputFile"]) {
                 if (inputFile != null) {
@@ -39,7 +39,7 @@ def call(Map config) {
             println "START Processing file parameter"
             FileUtils.processFileParam(this)
             println "END Processing file parameter"
-        }
+        }*/
 
         stage("Executing selected faults...") {
             echo "params is 'All' selected? : ${params.All}"
@@ -48,16 +48,7 @@ def call(Map config) {
             echo "params is 'Disk-IO' selected? : ${params.DiskIO}"
             echo "params is 'Diskspace' selected? : ${params.Diskspace}"
         }
-
-        stage("") {
-            when {
-                // Only execute this stage when selected DEPLOY_TRACK is `internal`, `alpha` or `beta`
-                expression {
-                    return params.All == true
-                }
-            }
-        }
-
+        
         stage('Invoke API Test') {
             when {
                 // Only execute this stage when selected ALL or TEST is TRUE
