@@ -12,156 +12,158 @@ import utility.FileUtils
  */
 def call(Map config) {
     pipeline {
-        stage('Clean Workspace') {
-            sh 'rm -rf *'
-        }
-        stage('Checkout') {
-            checkout scm
-        }
+        stages {
+            stage('Clean Workspace') {
+                sh 'rm -rf *'
+            }
+            stage('Checkout') {
+                checkout scm
+            }
 
-        /*stage("Upload Request.zip file (*-req.json)") {
-            def inputFile = input message: 'Please provide a file', parameters: [base64File('file')]
-            withEnv(["fileBase64=$inputFile"]) {
-                if (inputFile != null) {
-                    sh 'echo $fileBase64 | base64 -d > request.zip'
+            /*stage("Upload Request.zip file (*-req.json)") {
+                def inputFile = input message: 'Please provide a file', parameters: [base64File('file')]
+                withEnv(["fileBase64=$inputFile"]) {
+                    if (inputFile != null) {
+                        sh 'echo $fileBase64 | base64 -d > request.zip'
+                    } else {
+                        sh 'echo required file not provided.  throw error'
+                        throw new Exception("required request.zip file not provided.  throw error")
+                    }
+                }
+            }
+
+            stage("List workspace contents") {
+                sh 'ls'
+            }
+
+            stage("Process File parameter") {
+                println "START Processing file parameter"
+                FileUtils.processFileParam(this)
+                println "END Processing file parameter"
+            }*/
+
+            stage("Executing selected faults...") {
+                echo "params is 'All' selected? : ${params.All}"
+                echo "params is 'CPU' selected? : ${params.CPU}"
+                echo "params is 'Memory' selected? : ${params.Memory}"
+                echo "params is 'Disk-IO' selected? : ${params.DiskIO}"
+                echo "params is 'Diskspace' selected? : ${params.Diskspace}"
+                echo "params is 'TEST' selected? : ${params.TEST}"
+            }
+
+            stage('Invoke API Test') {
+                when {
+                    // Only execute this stage when selected ALL or TEST is TRUE
+                    expression {
+                        return params.All == true || params.TEST == true
+                    }
+                }
+                if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}")) {
+                    println "START INVOKE API TEST"
+                    println "whereami"
+                    println "pwd"
+                    try {
+                        apiCall(urlBuilder(APIGroovy.TEST_CONTEXT_PATH.apiURL, APIGroovy.TEST_API.apiURL, null),
+                                "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}"))
+                    } catch (Exception e) {
+                        println e.getMessage()
+                    }
+                    println "END INVOKE API TEST"
                 } else {
-                    sh 'echo required file not provided.  throw error'
-                    throw new Exception("required request.zip file not provided.  throw error")
+                    println "No request file found. Skip API Test"
                 }
             }
-        }
 
-        stage("List workspace contents") {
-            sh 'ls'
-        }
+            stage('Invoke CPU Fault') {
+                when {
+                    // Only execute this stage when selected ALL or CPU is TRUE
+                    expression {
+                        return params.All == true || params.CPU == true
+                    }
+                }
+                if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.CPU_FAULT_API.reqFile}")) {
+                    println "START INVOKE CPU FAULT"
+                    println "whereami"
+                    println "pwd"
+                    try {
+                        apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, APIReqBuilder.IP),
+                                "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.CPU_FAULT_API.reqFile))
+                    } catch (Exception e) {
+                        println e.getMessage()
+                    }
+                    println "END INVOKE CPU FAULT"
+                } else {
+                    println "No request file found. Skip CPU FAULT"
+                }
+            }
 
-        stage("Process File parameter") {
-            println "START Processing file parameter"
-            FileUtils.processFileParam(this)
-            println "END Processing file parameter"
-        }*/
+            stage('Invoke Memory Fault') {
+                when {
+                    // Only execute this stage when selected ALL or Memory is TRUE
+                    expression {
+                        return params.All == true || params.Memory == true
+                    }
+                }
+                if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.MEMORY_FAULT_API.reqFile}")) {
+                    println "START INVOKE MEMORY FAULT"
+                    println "whereami"
+                    println "pwd"
+                    try {
+                        apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.MEMORY_FAULT_API.apiURL, APIReqBuilder.IP),
+                                "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.MEMORY_FAULT_API.reqFile))
+                    } catch (Exception e) {
+                        println e.getMessage()
+                    }
+                    println "END INVOKE MEMORY FAULT"
+                } else {
+                    println "No request file found. Skip MEMORY FAULT"
+                }
+            }
 
-        stage("Executing selected faults...") {
-            echo "params is 'All' selected? : ${params.All}"
-            echo "params is 'CPU' selected? : ${params.CPU}"
-            echo "params is 'Memory' selected? : ${params.Memory}"
-            echo "params is 'Disk-IO' selected? : ${params.DiskIO}"
-            echo "params is 'Diskspace' selected? : ${params.Diskspace}"
-            echo "params is 'TEST' selected? : ${params.TEST}"
-        }
+            stage('Invoke DISK-IO Fault') {
+                when {
+                    // Only execute this stage when selected ALL or DISK-IO is TRUE
+                    expression {
+                        return params.All == true || params.DiskIO == true
+                    }
+                }
+                if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_IO_FAULT_API.reqFile}")) {
+                    println "START INVOKE DISK-IO FAULT"
+                    println "whereami"
+                    println "pwd"
+                    try {
+                        apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_IO_FAULT_API.apiURL, APIReqBuilder.IP),
+                                "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.DISK_IO_FAULT_API.reqFile))
+                    } catch (Exception e) {
+                        println e.getMessage()
+                    }
+                    println "END INVOKE DISK-IO FAULT"
+                } else {
+                    println "No request file found. Skip DISK-IO FAULT"
+                }
+            }
 
-        stage('Invoke API Test') {
-            when {
-                // Only execute this stage when selected ALL or TEST is TRUE
-                expression {
-                    return params.All == true || params.TEST == true
+            stage('Invoke DISK-SPACE Fault') {
+                when {
+                    // Only execute this stage when selected ALL or Diskspace is TRUE
+                    expression {
+                        return params.All == true || params.Diskspace == true
+                    }
                 }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}")) {
-                println "START INVOKE API TEST"
-                println "whereami"
-                println "pwd"
-                try {
-                    apiCall(urlBuilder(APIGroovy.TEST_CONTEXT_PATH.apiURL, APIGroovy.TEST_API.apiURL, null),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}"))
-                } catch (Exception e) {
-                    println e.getMessage()
+                if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_SPACE_FAULT_API.reqFile}")) {
+                    println "START INVOKE DISK-SPACE FAULT"
+                    println "whereami"
+                    println "pwd"
+                    try {
+                        apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_SPACE_FAULT_API.apiURL, APIReqBuilder.IP),
+                                "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.DISK_SPACE_FAULT_API.reqFile))
+                    } catch (Exception e) {
+                        println e.getMessage()
+                    }
+                    println "END INVOKE DISK-SPACE FAULT"
+                } else {
+                    println "No request file found. DISK-SPACE FAULT"
                 }
-                println "END INVOKE API TEST"
-            } else {
-                println "No request file found. Skip API Test"
-            }
-        }
-
-        stage('Invoke CPU Fault') {
-            when {
-                // Only execute this stage when selected ALL or CPU is TRUE
-                expression {
-                    return params.All == true || params.CPU == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.CPU_FAULT_API.reqFile}")) {
-                println "START INVOKE CPU FAULT"
-                println "whereami"
-                println "pwd"
-                try {
-                    apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.CPU_FAULT_API.reqFile))
-                } catch (Exception e) {
-                    println e.getMessage()
-                }
-                println "END INVOKE CPU FAULT"
-            } else {
-                println "No request file found. Skip CPU FAULT"
-            }
-        }
-
-        stage('Invoke Memory Fault') {
-            when {
-                // Only execute this stage when selected ALL or Memory is TRUE
-                expression {
-                    return params.All == true || params.Memory == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.MEMORY_FAULT_API.reqFile}")) {
-                println "START INVOKE MEMORY FAULT"
-                println "whereami"
-                println "pwd"
-                try {
-                    apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.MEMORY_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.MEMORY_FAULT_API.reqFile))
-                } catch (Exception e) {
-                    println e.getMessage()
-                }
-                println "END INVOKE MEMORY FAULT"
-            } else {
-                println "No request file found. Skip MEMORY FAULT"
-            }
-        }
-
-        stage('Invoke DISK-IO Fault') {
-            when {
-                // Only execute this stage when selected ALL or DISK-IO is TRUE
-                expression {
-                    return params.All == true || params.DiskIO == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_IO_FAULT_API.reqFile}")) {
-                println "START INVOKE DISK-IO FAULT"
-                println "whereami"
-                println "pwd"
-                try {
-                    apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_IO_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.DISK_IO_FAULT_API.reqFile))
-                } catch (Exception e) {
-                    println e.getMessage()
-                }
-                println "END INVOKE DISK-IO FAULT"
-            } else {
-                println "No request file found. Skip DISK-IO FAULT"
-            }
-        }
-
-        stage('Invoke DISK-SPACE Fault') {
-            when {
-                // Only execute this stage when selected ALL or Diskspace is TRUE
-                expression {
-                    return params.All == true || params.Diskspace == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_SPACE_FAULT_API.reqFile}")) {
-                println "START INVOKE DISK-SPACE FAULT"
-                println "whereami"
-                println "pwd"
-                try {
-                    apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_SPACE_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.DISK_SPACE_FAULT_API.reqFile))
-                } catch (Exception e) {
-                    println e.getMessage()
-                }
-                println "END INVOKE DISK-SPACE FAULT"
-            } else {
-                println "No request file found. DISK-SPACE FAULT"
             }
         }
     }
