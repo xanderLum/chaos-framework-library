@@ -3,7 +3,8 @@ package utility
 class FileUtils {
 
     static String FILEPARAM = "request.zip"
-    static String FOLDER = "request"
+//    static String FOLDER = "request"
+    static String FOLDER = "src/api/input"
 
     /**
      * Process File Parameter request.zip file containing:

@@ -41,7 +41,30 @@ def call(Map config) {
             println "END Processing file parameter"
         }
 
+        stage("Executing selected faults...") {
+            echo "params is 'All' selected? : ${params.All}"
+            echo "params is 'CPU' selected? : ${params.CPU}"
+            echo "params is 'Memory' selected? : ${params.Memory}"
+            echo "params is 'Disk-IO' selected? : ${params.DiskIO}"
+            echo "params is 'Diskspace' selected? : ${params.Diskspace}"
+        }
+
+        stage("") {
+            when {
+                // Only execute this stage when selected DEPLOY_TRACK is `internal`, `alpha` or `beta`
+                expression {
+                    return params.All == true
+                }
+            }
+        }
+
         stage('Invoke API Test') {
+            when {
+                // Only execute this stage when selected ALL or TEST is TRUE
+                expression {
+                    return params.All == true || params.TEST == true
+                }
+            }
             if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}")) {
                 println "START INVOKE API TEST"
                 println "whereami"
@@ -59,6 +82,12 @@ def call(Map config) {
         }
 
         stage('Invoke CPU Fault') {
+            when {
+                // Only execute this stage when selected ALL or CPU is TRUE
+                expression {
+                    return params.All == true || params.CPU == true
+                }
+            }
             if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.CPU_FAULT_API.reqFile}")) {
                 println "START INVOKE CPU FAULT"
                 println "whereami"
@@ -76,6 +105,12 @@ def call(Map config) {
         }
 
         stage('Invoke Memory Fault') {
+            when {
+                // Only execute this stage when selected ALL or Memory is TRUE
+                expression {
+                    return params.All == true || params.Memory == true
+                }
+            }
             if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.MEMORY_FAULT_API.reqFile}")) {
                 println "START INVOKE MEMORY FAULT"
                 println "whereami"
@@ -93,6 +128,12 @@ def call(Map config) {
         }
 
         stage('Invoke DISK-IO Fault') {
+            when {
+                // Only execute this stage when selected ALL or DISK-IO is TRUE
+                expression {
+                    return params.All == true || params.DiskIO == true
+                }
+            }
             if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_IO_FAULT_API.reqFile}")) {
                 println "START INVOKE DISK-IO FAULT"
                 println "whereami"
@@ -110,6 +151,12 @@ def call(Map config) {
         }
 
         stage('Invoke DISK-SPACE Fault') {
+            when {
+                // Only execute this stage when selected ALL or Diskspace is TRUE
+                expression {
+                    return params.All == true || params.Diskspace == true
+                }
+            }
             if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_SPACE_FAULT_API.reqFile}")) {
                 println "START INVOKE DISK-SPACE FAULT"
                 println "whereami"
