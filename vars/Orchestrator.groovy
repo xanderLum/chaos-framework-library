@@ -12,12 +12,15 @@ import utility.FileUtils
  */
 def call(Map config) {
     pipeline {
+        agent any
         stages {
             stage('Clean Workspace') {
-                sh 'rm -rf *'
+                steps {
+                    sh 'rm -rf *'
+                }
             }
             stage('Checkout') {
-                checkout scm
+                steps { checkout scm }
             }
 
             /*stage("Upload Request.zip file (*-req.json)") {
@@ -43,12 +46,14 @@ def call(Map config) {
             }*/
 
             stage("Executing selected faults...") {
-                echo "params is 'All' selected? : ${params.All}"
-                echo "params is 'CPU' selected? : ${params.CPU}"
-                echo "params is 'Memory' selected? : ${params.Memory}"
-                echo "params is 'Disk-IO' selected? : ${params.DiskIO}"
-                echo "params is 'Diskspace' selected? : ${params.Diskspace}"
-                echo "params is 'TEST' selected? : ${params.TEST}"
+                steps {
+                    echo "params is 'All' selected? : ${params.All}"
+                    echo "params is 'CPU' selected? : ${params.CPU}"
+                    echo "params is 'Memory' selected? : ${params.Memory}"
+                    echo "params is 'Disk-IO' selected? : ${params.DiskIO}"
+                    echo "params is 'Diskspace' selected? : ${params.Diskspace}"
+                    echo "params is 'TEST' selected? : ${params.TEST}"
+                }
             }
 
             stage('Invoke API Test') {
@@ -164,6 +169,11 @@ def call(Map config) {
                 } else {
                     println "No request file found. DISK-SPACE FAULT"
                 }
+            }
+        }
+        post {
+            always {
+                echo 'END!'
             }
         }
     }
