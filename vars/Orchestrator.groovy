@@ -1,5 +1,3 @@
-
-
 import constants.APIGroovy
 import utility.APIReqBuilder
 import utility.FileUtils
@@ -13,7 +11,7 @@ import utility.FileUtils
 def call(Map config) {
     node {
         stage('Clean Workspace') {
-            sh 'rm -rf *'
+            cleanWs()
         }
         stage('Checkout') {
             checkout scm
@@ -50,14 +48,8 @@ def call(Map config) {
             echo "params is 'TEST' selected? : ${params.TEST}"
         }
 
-        stage('Invoke API Test'){
-            when {
-                // Only execute this stage when selected ALL or TEST is TRUE
-                expression {
-                    return params.All == true || params.TEST == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}")) {
+        stage('Invoke API Test') {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.TEST_API.reqFile}") && (params.ALL == true || params.TEST == true)) {
                 println "START INVOKE API TEST"
                 println "whereami"
                 println "pwd"
@@ -74,19 +66,13 @@ def call(Map config) {
         }
 
         stage('Invoke CPU Fault') {
-            when {
-                // Only execute this stage when selected ALL or CPU is TRUE
-                expression {
-                    return params.All == true || params.CPU == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.CPU_FAULT_API.reqFile}")) {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.CPU_FAULT_API.reqFile}") && (params.ALL == true || params.CPU == true)) {
                 println "START INVOKE CPU FAULT"
                 println "whereami"
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.CPU_FAULT_API.reqFile))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.CPU_FAULT_API.reqFile}"))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -97,19 +83,13 @@ def call(Map config) {
         }
 
         stage('Invoke Memory Fault') {
-            when {
-                // Only execute this stage when selected ALL or Memory is TRUE
-                expression {
-                    return params.All == true || params.Memory == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.MEMORY_FAULT_API.reqFile}")) {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.MEMORY_FAULT_API.reqFile}") && (params.ALL == true || params.Memory == true)) {
                 println "START INVOKE MEMORY FAULT"
                 println "whereami"
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.MEMORY_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.MEMORY_FAULT_API.reqFile))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.MEMORY_FAULT_API.reqFile}"))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -120,19 +100,13 @@ def call(Map config) {
         }
 
         stage('Invoke DISK-IO Fault') {
-            when {
-                // Only execute this stage when selected ALL or DISK-IO is TRUE
-                expression {
-                    return params.All == true || params.DiskIO == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_IO_FAULT_API.reqFile}")) {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_IO_FAULT_API.reqFile}") && (params.ALL == true || params.DiskIO == true)) {
                 println "START INVOKE DISK-IO FAULT"
                 println "whereami"
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_IO_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.DISK_IO_FAULT_API.reqFile))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.DISK_IO_FAULT_API.reqFile}"))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -143,19 +117,13 @@ def call(Map config) {
         }
 
         stage('Invoke DISK-SPACE Fault') {
-            when {
-                // Only execute this stage when selected ALL or Diskspace is TRUE
-                expression {
-                    return params.All == true || params.Diskspace == true
-                }
-            }
-            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_SPACE_FAULT_API.reqFile}")) {
+            if (fileExists(file: "${FileUtils.FOLDER}/${APIGroovy.DISK_SPACE_FAULT_API.reqFile}") && (params.ALL == true || params.Diskspace == true)) {
                 println "START INVOKE DISK-SPACE FAULT"
                 println "whereami"
                 println "pwd"
                 try {
                     apiCall(urlBuilder(APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_SPACE_FAULT_API.apiURL, APIReqBuilder.IP),
-                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, APIGroovy.DISK_SPACE_FAULT_API.reqFile))
+                            "POST", APIReqBuilder.dataReqBuilder(this.WORKSPACE, "${FileUtils.FOLDER}/${APIGroovy.DISK_SPACE_FAULT_API.reqFile}"))
                 } catch (Exception e) {
                     println e.getMessage()
                 }
@@ -180,8 +148,15 @@ def apiCall(String url, String method, String data) {
     println(" Invoking API url:  ${url} ")
     println(" Invoking API method: ${method} ")
     println(" Invoking API data:  ${data} ")
-    def response = sh(returnStdout: true, script: "curl -X ${method} -d \'${data}\' -H \'Authorization:Token 0418bfa3937504586f4a0ea80c9fffb9\' ${url}").trim()
-    echo "${response}"
+
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: Credentials.mangleServiceAccount, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        println(" username: ${env.USERNAME} ")
+        println(" password: ${env.PASSWORD} ")
+
+        def response = sh(returnStdout: true, script: "curl -kv ${method} -d \'${data}\' " +
+                "--user ${env.USERNAME}:${env.PASSWORD} -H 'Content-Type: application/json' ${url}").trim()
+        echo "${response}"
+    }
 }
 
 /**

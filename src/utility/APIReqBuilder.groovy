@@ -5,7 +5,9 @@ import com.cloudbees.groovy.cps.NonCPS
 
 class APIReqBuilder implements Serializable {
     static String HTTPS = "https://";
-    static String IP = "10.11.57.125"; //change to variable in pipeline
+//    static String IP = "10.11.57.125"; //change to variable in pipeline
+    static String IP = "mangle.devops.karnagi.monster:8443/"; //change to variable in pipeline
+
 
     /**
      * Build Data request for the API Injection faults
