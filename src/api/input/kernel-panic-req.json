@@ -1,0 +1,6 @@
+{
+  "endpointName": "groupA",
+  "id": "groupA",
+  "injectionHomeDir": "/tmp/",
+  "taskName": "fault-inject_Kernel_Panic"
+}

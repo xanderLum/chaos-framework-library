@@ -1,0 +1,8 @@
+{
+  "cpuLoad": 100,
+  "endpointName": "groupA",
+  "id": "groupA",
+  "injectionHomeDir": "/tmp/",
+  "taskName": "fault-inject_CPU_LOAD-100",
+  "timeoutInMilliseconds": 2.1e+6
+}

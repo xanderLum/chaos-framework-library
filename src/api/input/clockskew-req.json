@@ -1,0 +1,12 @@
+{
+  "clockSkewOperation": "FUTURE",
+  "days": 365,
+  "endpointName": "groupA",
+  "hours": 0,
+  "id": "groupA",
+  "injectionHomeDir": "/tmp/",
+  "minutes": 0,
+  "seconds": 0,
+  "taskName": "fault-inject_clockSkew",
+  "timeoutInMilliseconds": 2.1e+6
+}

@@ -1,0 +1,9 @@
+{
+  "directoryPath": "/home/",
+  "diskFillSize": "/home/",
+  "endpointName": "groupA",
+  "id": "groupA",
+  "injectionHomeDir": "/tmp/",
+  "taskName": "fault-inject_DiskSPACE_LOAD-8GB",
+  "timeoutInMilliseconds": 2.1e+6
+}

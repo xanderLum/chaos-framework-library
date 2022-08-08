@@ -1,0 +1,8 @@
+{
+  "endpointName": "groupA",
+  "id": "groupA",
+  "injectionHomeDir": "/tmp/",
+  "memoryLoad": 100,
+  "taskName": "fault-inject_MEMORY_LOAD-100",
+  "timeoutInMilleseconds": 2.1e+6
+}
