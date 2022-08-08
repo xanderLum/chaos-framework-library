@@ -1,1 +1,8 @@
-{  "request": {    "url": "/hello-world"  },  "response": {    "body": "Hi!"  }}
+{
+  "request": {
+    "url": "/hello-world"
+  },
+  "response": {
+    "body": "Hi!"
+  }
+}

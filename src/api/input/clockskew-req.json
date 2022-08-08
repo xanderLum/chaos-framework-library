@@ -1,9 +1,9 @@
 {
   "clockSkewOperation": "FUTURE",
   "days": 365,
-  "endpointName": "groupA",
+  "endpointName": "remote-tomcat",
   "hours": 0,
-  "id": "groupA",
+  "id": "remote-tomcat",
   "injectionHomeDir": "/tmp/",
   "minutes": 0,
   "seconds": 0,

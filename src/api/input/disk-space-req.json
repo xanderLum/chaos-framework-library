@@ -1,8 +1,8 @@
 {
   "directoryPath": "/home/",
   "diskFillSize": "/home/",
-  "endpointName": "groupA",
-  "id": "groupA",
+  "endpointName": "remote-tomcat",
+  "id": "remote-tomcat",
   "injectionHomeDir": "/tmp/",
   "taskName": "fault-inject_DiskSPACE_LOAD-8GB",
   "timeoutInMilliseconds": 2.1e+6

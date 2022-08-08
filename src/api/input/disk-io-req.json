@@ -1,6 +1,6 @@
 {
-  "endpointName": "groupA",
-  "id": "groupA",
+  "endpointName": "remote-tomcat",
+  "id": "remote-tomcat",
   "injectionHomeDir": "/tmp/",
   "ioSize": 8e+9,
   "taskName": "fault-inject_DiskIO_LOAD-8GB",

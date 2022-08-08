@@ -1,6 +1,6 @@
 {
-  "endpointName": "groupA",
-  "id": "groupA",
+  "endpointName": "remote-tomcat",
+  "id": "remote-tomcat",
   "injectionHomeDir": "/tmp/",
   "memoryLoad": 100,
   "taskName": "fault-inject_MEMORY_LOAD-100",
