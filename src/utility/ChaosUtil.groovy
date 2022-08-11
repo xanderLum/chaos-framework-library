@@ -4,11 +4,13 @@ import constants.APIGroovy
 import utility.VMWareMangle.ParamBuilder
 import utility.VMWareMangle.ReqMapper.CPURequestObj
 import utility.VMWareMangle.ReqMapper.DiskIORequestObj
+import utility.VMWareMangle.ReqMapper.DiskSpaceRequestObj
 import utility.VMWareMangle.ReqMapper.MemoryRequestObj
 
 class ChaosUtil {
 
     static def injectCPUFault(script, CPURequestObj cpuRequestObj) {
+        script.sh "echo ChaosUtil Injecting CPU Fault"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, APIReqBuilder.IP)
         ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(cpuRequestObj))
     }
@@ -23,7 +25,7 @@ class ChaosUtil {
         ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(diskIORequestObj))
     }
 
-    static def injectDiskSpaceFault(script, DiskIORequestObj diskSpaceRequestObj) {
+    static def injectDiskSpaceFault(script, DiskSpaceRequestObj diskSpaceRequestObj) {
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_SPACE_FAULT_API.apiURL, APIReqBuilder.IP)
         ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(diskSpaceRequestObj))
     }
