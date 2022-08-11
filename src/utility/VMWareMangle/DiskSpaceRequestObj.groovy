@@ -10,8 +10,8 @@ class DiskSpaceRequestObj extends BaseRequestObj {
     DiskSpaceRequestObj(String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, String directoryPath, int diskFillSize) {
         super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName)
         this.directoryPath = StringUtils.isEmpty(directoryPath) ? "/home/" : directoryPath
-        //if diskFillSize is empty, default diskFillSize is 80
-        this.diskFillSize = StringUtils.isEmpty(String.valueOf(diskFillSize)) ? 80 : diskFillSize
+        //if diskFillSize is empty, default diskFillSize is 90
+        this.diskFillSize = diskFillSize < 1 ? 90 : diskFillSize
     }
 
 
