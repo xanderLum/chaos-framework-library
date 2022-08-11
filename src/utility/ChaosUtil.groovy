@@ -1,15 +1,12 @@
 package utility
 
 import constants.APIGroovy
-import utility.VMWareMangle.ParamBuilder
-import utility.VMWareMangle.CPURequestObj
-import utility.VMWareMangle.DiskIORequestObj
-import utility.VMWareMangle.DiskSpaceRequestObj
-import utility.VMWareMangle.MemoryRequestObj
+import utility.VMWareMangle.*
 
 class ChaosUtil {
 
-    static def injectCPUFault(script, CPURequestObj cpuRequestObj) {
+    static def injectCPUFault(script, String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int cpuLoad) {
+        CPURequestObj cpuRequestObj = new CPURequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, cpuLoad)
         script.sh "echo ChaosUtil Injecting CPU Fault"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, APIReqBuilder.IP)
         ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(cpuRequestObj))
