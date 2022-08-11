@@ -8,6 +8,7 @@ class ChaosUtil {
     static def injectCPUFault(script, String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int cpuLoad) {
         CPURequestObj cpuRequestObj = new CPURequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, cpuLoad)
         script.sh "echo ChaosUtil Injecting CPU Fault"
+        script.sh "echo cpuRequestObj: ${cpuRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, APIReqBuilder.IP)
         ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(cpuRequestObj))
     }

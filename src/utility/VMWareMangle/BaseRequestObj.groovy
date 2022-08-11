@@ -18,4 +18,16 @@ class BaseRequestObj implements Serializable {
         this.injectionHomeDir = StringUtils.isEmpty(injectionHomeDir) ? StaticRequestObj.INJECTIONHOMEDIR : injectionHomeDir
         this.taskName = StringUtils.isEmpty(taskName) ? 'task' : StaticRequestObj.PREFIXTASKNAME + taskName
     }
+
+
+    @Override
+    public String toString() {
+        return "BaseRequestObj{" +
+                "endpointName='" + endpointName + '\'' +
+                ", timeoutInMilliseconds=" + timeoutInMilliseconds +
+                ", id='" + id + '\'' +
+                ", injectionHomeDir='" + injectionHomeDir + '\'' +
+                ", taskName='" + taskName + '\'' +
+                '}';
+    }
 }

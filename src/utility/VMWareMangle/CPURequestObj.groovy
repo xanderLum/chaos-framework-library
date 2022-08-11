@@ -11,4 +11,12 @@ class CPURequestObj extends BaseRequestObj {
         //if cpuLoad is empty, default cpuLoad is 100
         this.cpuLoad = StringUtils.isEmpty(String.valueOf(cpuLoad)) ? 100 : cpuLoad
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "CPURequestObj{" +
+                "cpuLoad=" + cpuLoad +
+                '}';
+    }
 }

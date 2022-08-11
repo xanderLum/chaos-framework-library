@@ -20,11 +20,11 @@ class ApiUtil {
         println(" Invoking API data:  ${data} ")
 
         script.withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: Credentials.mangleServiceAccount, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-            println(" username: ${env.USERNAME} ")
-            println(" password: ${env.PASSWORD} ")
+            println(" username: ${script.env.USERNAME} ")
+            println(" password: ${script.env.PASSWORD} ")
 
             def response = script.sh(returnStdout: true, script: "curl -kv ${method} -d \'${data}\' " +
-                    "--user ${env.USERNAME}:${env.PASSWORD} -H 'Content-Type: application/json' ${url}").trim()
+                    "--user ${script.env.USERNAME}:${script.env.PASSWORD} -H 'Content-Type: application/json' ${url}").trim()
             script.echo "${response}"
             return response
         }
