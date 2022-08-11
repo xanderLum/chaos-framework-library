@@ -14,8 +14,7 @@ class CPURequestObj extends BaseRequestObj {
 
     @Override
     public String toString() {
-        return super.toString() + "\n" +
-                "CPURequestObj{" +
+        return "CPURequestObj{" + super.toString() +
                 "cpuLoad=" + cpuLoad +
                 '}';
     }
