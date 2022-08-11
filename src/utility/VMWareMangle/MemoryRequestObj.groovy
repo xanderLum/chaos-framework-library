@@ -11,4 +11,12 @@ class MemoryRequestObj extends BaseRequestObj {
         //if memoryLoad is empty, default memoryLoad is 100
         this.memoryLoad = StringUtils.isEmpty(String.valueOf(memoryLoad)) ? 100 : memoryLoad
     }
+
+
+    @Override
+    public String toString() {
+        return "MemoryRequestObj{" + super.toString() +
+                "memoryLoad=" + memoryLoad +
+                '}';
+    }
 }

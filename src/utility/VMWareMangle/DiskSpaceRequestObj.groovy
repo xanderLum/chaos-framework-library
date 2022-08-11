@@ -13,4 +13,13 @@ class DiskSpaceRequestObj extends BaseRequestObj {
         //if diskFillSize is empty, default diskFillSize is 80
         this.diskFillSize = StringUtils.isEmpty(String.valueOf(diskFillSize)) ? 80 : diskFillSize
     }
+
+
+    @Override
+    public String toString() {
+        return "DiskSpaceRequestObj{" + super.toString() +
+                "directoryPath='" + directoryPath + '\'' +
+                ", diskFillSize=" + diskFillSize +
+                '}';
+    }
 }

@@ -11,4 +11,12 @@ class DiskIORequestObj extends BaseRequestObj {
         //if ioSize is empty, default IO size is 8GB
         this.ioSize = StringUtils.isEmpty(String.valueOf(ioSize)) ? 8e+9 : ioSize
     }
+
+
+    @Override
+    public String toString() {
+        return "DiskIORequestObj{" + super.toString() +
+                "ioSize=" + ioSize +
+                '}';
+    }
 }
