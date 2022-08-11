@@ -7,7 +7,7 @@ class DiskIORequestObj extends BaseRequestObj {
     int ioSize
     String targetDir
 
-    DiskIORequestObj(String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int ioSize) {
+    DiskIORequestObj(String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int ioSize, String targetDir) {
         super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName)
         //if ioSize is empty, default IO size is 8GB
         this.ioSize = StringUtils.isEmpty(String.valueOf(ioSize)) ? 8e+6 : ioSize
