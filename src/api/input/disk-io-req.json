@@ -3,6 +3,7 @@
   "id": "remote-tomcat",
   "injectionHomeDir": "/tmp/",
   "ioSize": 8e+9,
+  "targetDir": "/home/",
   "taskName": "fault-inject_DiskIO_LOAD-8GB",
   "timeoutInMilliseconds": 2.1e+6
 }
