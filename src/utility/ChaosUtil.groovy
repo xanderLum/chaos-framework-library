@@ -2,10 +2,10 @@ package utility
 
 import constants.APIGroovy
 import utility.VMWareMangle.ParamBuilder
-import utility.VMWareMangle.ReqMapper.CPURequestObj
-import utility.VMWareMangle.ReqMapper.DiskIORequestObj
-import utility.VMWareMangle.ReqMapper.DiskSpaceRequestObj
-import utility.VMWareMangle.ReqMapper.MemoryRequestObj
+import utility.VMWareMangle.CPURequestObj
+import utility.VMWareMangle.DiskIORequestObj
+import utility.VMWareMangle.DiskSpaceRequestObj
+import utility.VMWareMangle.MemoryRequestObj
 
 class ChaosUtil {
 

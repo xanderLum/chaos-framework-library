@@ -1,4 +1,4 @@
-package utility.VMWareMangle.ReqMapper
+package utility.VMWareMangle
 
 @Grab(group = 'org.codehaus.groovy', module = 'groovy', version = '3.0.12')
 import org.apache.groovy.parser.antlr4.util.StringUtils

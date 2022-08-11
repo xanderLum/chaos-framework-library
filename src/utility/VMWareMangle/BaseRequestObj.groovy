@@ -1,10 +1,10 @@
-package utility.VMWareMangle.ReqMapper
+package utility.VMWareMangle
 
 
 import constants.StaticRequestObj
 import org.apache.groovy.parser.antlr4.util.StringUtils
 
-class BaseRequestObj {
+class BaseRequestObj implements Serializable {
     String endpointName
     int timeoutInMilliseconds
     String id
