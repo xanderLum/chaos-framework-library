@@ -21,8 +21,8 @@ class ChaosUtil {
         ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(memoryRequestObj))
     }
 
-    static def injectDiskIOFault(script, String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int ioSize) {
-        DiskIORequestObj diskIORequestObj = new DiskIORequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, ioSize)
+    static def injectDiskIOFault(script, String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int ioSize, String targetDir) {
+        DiskIORequestObj diskIORequestObj = new DiskIORequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, ioSize, targetDir)
         script.sh "echo ChaosUtil Injecting DiskIO Fault"
         script.sh "echo diskIORequestObj: ${diskIORequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_IO_FAULT_API.apiURL, APIReqBuilder.IP)
