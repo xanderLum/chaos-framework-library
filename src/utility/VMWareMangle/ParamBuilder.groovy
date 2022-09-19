@@ -9,7 +9,7 @@ class ParamBuilder<T> {
         return JsonOutput.toJson(requestObject)
     }
 
-    static def buildKeyValPair(T requestObject) {
+    /*static def buildKeyValPair(T requestObject) {
 
         // typical Groovy
 
@@ -24,7 +24,7 @@ class ParamBuilder<T> {
             List valueList = m.get(object.myKey)
             m.put(object.myKey, valueList)
         }
-    }
+    }*/
 
 
 }
