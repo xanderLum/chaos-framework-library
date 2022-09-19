@@ -12,9 +12,9 @@ class ClockSkewRequestObj extends BaseRequestObj {
 
     ClockSkewRequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName,
                         String clockSkewOperation, int days, int hr, int min, int sec, randomEndpoint,
-                        String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                        String cronExpression, def timeInMilliseconds, String schedId, String description) {
         super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         this.clockSkewOperation = StringUtils.isEmpty(clockSkewOperation) ? "FUTURE" : clockSkewOperation
         this.days = days < 0 ? 365 : days
         this.hr = hr < 0 ? 24 : hr

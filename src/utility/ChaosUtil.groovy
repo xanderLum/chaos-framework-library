@@ -16,15 +16,15 @@ class ChaosUtil {
      * @param cpuLoad //if cpuLoad is less than 1, default cpuLoad is 100
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectCPUFault(script, String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int cpuLoad, randomEndpoint,
-                              String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                              String cronExpression, def timeInMilliseconds, String schedId, String description) {
         CPURequestObj cpuRequestObj = new CPURequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, cpuLoad, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting CPU Fault"
         script.sh "echo cpuRequestObj: ${cpuRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, ApiUtil.IP)
@@ -42,15 +42,15 @@ class ChaosUtil {
      * @param memoryLoad //if memoryLoad is less than 1, default memoryLoad is 100
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectMemoryFault(script, String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int memoryLoad, randomEndpoint,
-                                 String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                                 String cronExpression, def timeInMilliseconds, String schedId, String description) {
         MemoryRequestObj memoryRequestObj = new MemoryRequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, memoryLoad, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting Memory Fault"
         script.sh "echo memoryRequestObj: ${memoryRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.MEMORY_FAULT_API.apiURL, ApiUtil.IP)
@@ -70,15 +70,15 @@ class ChaosUtil {
      * @param targetDir //if targetDir is empty, default is "/home/"
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectDiskIOFault(script, String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, def ioSize, String targetDir, randomEndpoint,
-                                 String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                                 String cronExpression, def timeInMilliseconds, String schedId, String description) {
         DiskIORequestObj diskIORequestObj = new DiskIORequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, ioSize, targetDir, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting DiskIO Fault"
         script.sh "echo diskIORequestObj: ${diskIORequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_IO_FAULT_API.apiURL, ApiUtil.IP)
@@ -98,15 +98,15 @@ class ChaosUtil {
      * @param diskFillSize //if diskFillSize is empty, default diskFillSize is 90
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectDiskSpaceFault(script, String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, String directoryPath, def diskFillSize, randomEndpoint,
-                                    String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                                    String cronExpression, def timeInMilliseconds, String schedId, String description) {
         DiskSpaceRequestObj diskSpaceRequestObj = new DiskSpaceRequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, directoryPath, diskFillSize, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting DiskSpace Fault"
         script.sh "echo diskSpaceRequestObj: ${diskSpaceRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.DISK_SPACE_FAULT_API.apiURL, ApiUtil.IP)
@@ -122,15 +122,15 @@ class ChaosUtil {
      * @param taskName
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectKernelPanicFault(script, String endpointName, String id, String injectionHomeDir, String taskName, randomEndpoint,
-                                      String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                                      String cronExpression, def timeInMilliseconds, String schedId, String description) {
         KernelPanicRequestObj kernelPanicRequestObj = new KernelPanicRequestObj(endpointName, id, injectionHomeDir, taskName, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting Kernel Panic Fault"
         script.sh "echo kernelPanicRequestObj: ${kernelPanicRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.KERNEL_PANIC_FAULT_API.apiURL, ApiUtil.IP)
@@ -148,15 +148,15 @@ class ChaosUtil {
      * @param taskName
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectFileHandlerFault(script, String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, randomEndpoint,
-                                      String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                                      String cronExpression, def timeInMilliseconds, String schedId, String description) {
         FileHandlerLeakRequestObj fileHandlerLeakRequestObj = new FileHandlerLeakRequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting File Handler Leak Fault"
         script.sh "echo fileHandlerLeakRequestObj: ${fileHandlerLeakRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.FILE_HANDLER_LEAK_FAULT_API.apiURL, ApiUtil.IP)
@@ -179,16 +179,16 @@ class ChaosUtil {
      * @param sec
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectClockSkewFault(script, String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName,
                                     String clockSkewOperation, int days, int hr, int min, int sec, randomEndpoint,
-                                    String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                                    String cronExpression, def timeInMilliseconds, String schedId, String description) {
         ClockSkewRequestObj clockSkewRequestObj = new ClockSkewRequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName,
-                clockSkewOperation, days, hr, min, sec, randomEndpoint, cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                clockSkewOperation, days, hr, min, sec, randomEndpoint, cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting Clock Skew Fault"
         script.sh "echo clockSkewRequestObj: ${clockSkewRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CLOCKSKEW_FAULT_API.apiURL, ApiUtil.IP)
@@ -210,16 +210,16 @@ class ChaosUtil {
      * @param remediationCommand
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectKillProcessFault(script, String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName,
                                       boolean killAll, String processId, String processIdentifier, String remediationCommand, randomEndpoint,
-                                      String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                                      String cronExpression, def timeInMilliseconds, String schedId, String description) {
         KillProcessRequestObj killProcessRequestObj = new KillProcessRequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName,
-                killAll, processId, processIdentifier, remediationCommand, randomEndpoint, cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                killAll, processId, processIdentifier, remediationCommand, randomEndpoint, cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting Kill Process Fault"
         script.sh "echo killProcessRequestObj: ${killProcessRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.KILL_PROCESS_FAULT.apiURL, ApiUtil.IP)
@@ -241,16 +241,16 @@ class ChaosUtil {
      * @param remediationCommand
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      * @return
      */
     static def injectNetworkPacketLossFault(script, String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName,
                                             boolean killAll, String processId, String processIdentifier, String remediationCommand, randomEndpoint,
-                                            String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                                            String cronExpression, def timeInMilliseconds, String schedId, String description) {
         KillProcessRequestObj killProcessRequestObj = new KillProcessRequestObj(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName,
-                killAll, processId, processIdentifier, remediationCommand, randomEndpoint, cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                killAll, processId, processIdentifier, remediationCommand, randomEndpoint, cronExpression, timeInMilliseconds, schedId, description)
         script.sh "echo ChaosUtil Injecting Kill Process Fault"
         script.sh "echo killProcessRequestObj: ${killProcessRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.NETWORK_FAULT.apiURL, ApiUtil.IP)

@@ -12,9 +12,9 @@ class KillProcessRequestObj extends BaseRequestObj {
     KillProcessRequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName,
                           boolean killAll, String processId, String processIdentifier,
                           String remediationCommand, randomEndpoint,
-                          String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                          String cronExpression, def timeInMilliseconds, String schedId, String description) {
         super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         this.processId = StringUtils.isEmpty(processId) ? "123" : processId
         this.processIdentifier = StringUtils.isEmpty(processIdentifier) ? "123" : processIdentifier
         this.remediationCommand = StringUtils.isEmpty(remediationCommand) ? "systemctl <service> status" : remediationCommand

@@ -9,9 +9,9 @@ class DiskIORequestObj extends BaseRequestObj {
 
     DiskIORequestObj(String endpointName, timeoutInMilliseconds, String id, String injectionHomeDir,
                      String taskName, ioSize, String targetDir, randomEndpoint,
-                     String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                     String cronExpression, def timeInMilliseconds, String schedId, String description) {
         super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         //if ioSize is less than 1, default IO size is 8GB
         this.ioSize = ioSize < 1 ? 8e+6 : ioSize
         //if targetDir is empty, default is "/home/"

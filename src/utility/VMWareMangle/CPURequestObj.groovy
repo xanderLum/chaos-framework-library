@@ -14,15 +14,15 @@ class CPURequestObj extends BaseRequestObj {
      * @param cpuLoad
      * @param randomEndpoint
      * @param cronExpression
-     * @param schedTimeoutInMilliseconds
+     * @param timeInMilliseconds
      * @param schedId
      * @param description
      */
     CPURequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir,
                   String taskName, def cpuLoad, randomEndpoint,
-                  String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                  String cronExpression, def timeInMilliseconds, String schedId, String description) {
         super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         //if cpuLoad is less than 1, default cpuLoad is 100
         this.cpuLoad = cpuLoad < 1 ? 100 : cpuLoad
     }

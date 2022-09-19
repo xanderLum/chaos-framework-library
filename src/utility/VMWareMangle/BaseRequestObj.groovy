@@ -15,15 +15,15 @@ class BaseRequestObj implements Serializable {
     ScheduleRequestObj schedule
 
     BaseRequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, randomEndpoint,
-                   String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                   String cronExpression, def timeInMilliseconds, String schedId, String description) {
         this.endpointName = StringUtils.isEmpty(endpointName) ? StaticRequestObj.ENDPOINT : endpointName
         this.timeoutInMilliseconds = timeoutInMilliseconds < 1 ? StaticRequestObj.timeoutInMilliseconds : timeoutInMilliseconds
         this.id = StringUtils.isEmpty(id) ? StaticRequestObj.ID : id
         this.injectionHomeDir = StringUtils.isEmpty(injectionHomeDir) ? StaticRequestObj.INJECTIONHOMEDIR : injectionHomeDir
         this.taskName = StringUtils.isEmpty(taskName) ? 'task' : StaticRequestObj.PREFIXTASKNAME + taskName
         this.randomEndpoint = randomEndpoint
-        if (!StringUtils.isEmpty(cronExpression) || schedTimeoutInMilliseconds != null) {
-            this.schedule = new ScheduleRequestObj(cronExpression, schedTimeoutInMilliseconds, schedId, description)
+        if (!StringUtils.isEmpty(cronExpression) || timeInMilliseconds != null) {
+            this.schedule = new ScheduleRequestObj(cronExpression, timeInMilliseconds, schedId, description)
         }
     }
 

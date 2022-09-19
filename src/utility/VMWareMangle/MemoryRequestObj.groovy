@@ -5,9 +5,9 @@ class MemoryRequestObj extends BaseRequestObj {
 
     MemoryRequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir,
                      String taskName, def memoryLoad, randomEndpoint,
-                     String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                     String cronExpression, def timeInMilliseconds, String schedId, String description) {
         super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         //if memoryLoad is less than 1, default memoryLoad is 100
         this.memoryLoad = memoryLoad < 1 ? 100 : memoryLoad
     }

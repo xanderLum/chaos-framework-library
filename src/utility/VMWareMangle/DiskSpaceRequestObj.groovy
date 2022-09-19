@@ -9,9 +9,9 @@ class DiskSpaceRequestObj extends BaseRequestObj {
 
     DiskSpaceRequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir,
                         String taskName, String directoryPath, def diskFillSize, randomEndpoint,
-                        String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+                        String cronExpression, def timeInMilliseconds, String schedId, String description) {
         super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
-                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+                cronExpression, timeInMilliseconds, schedId, description)
         //if directoryPath is empty, default is "/home/"
         this.directoryPath = StringUtils.isEmpty(directoryPath) ? "/home/" : directoryPath
         //if diskFillSize is empty, default diskFillSize is 90
