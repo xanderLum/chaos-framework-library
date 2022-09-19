@@ -3,6 +3,21 @@ package utility.VMWareMangle
 class CPURequestObj extends BaseRequestObj {
     def cpuLoad
 
+    /**
+     * CPU Request Obj
+     *
+     * @param endpointName
+     * @param timeoutInMilliseconds
+     * @param id
+     * @param injectionHomeDir
+     * @param taskName
+     * @param cpuLoad
+     * @param randomEndpoint
+     * @param cronExpression
+     * @param schedTimeoutInMilliseconds
+     * @param schedId
+     * @param description
+     */
     CPURequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir,
                   String taskName, def cpuLoad, randomEndpoint,
                   String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
