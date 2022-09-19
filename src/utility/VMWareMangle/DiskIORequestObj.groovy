@@ -4,13 +4,17 @@ package utility.VMWareMangle
 import org.apache.groovy.parser.antlr4.util.StringUtils
 
 class DiskIORequestObj extends BaseRequestObj {
-    int ioSize
+    def ioSize
     String targetDir
 
-    DiskIORequestObj(String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int ioSize, String targetDir) {
-        super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName)
-        //if ioSize is empty, default IO size is 8GB
+    DiskIORequestObj(String endpointName, timeoutInMilliseconds, String id, String injectionHomeDir,
+                     String taskName, ioSize, String targetDir, randomEndpoint,
+                     String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+        super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
+                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+        //if ioSize is less than 1, default IO size is 8GB
         this.ioSize = ioSize < 1 ? 8e+6 : ioSize
+        //if targetDir is empty, default is "/home/"
         this.targetDir = StringUtils.isEmpty(String.valueOf(targetDir)) ? "/home/" : targetDir
     }
 
@@ -19,7 +23,7 @@ class DiskIORequestObj extends BaseRequestObj {
     public String toString() {
         return "DiskIORequestObj{" + super.toString() +
                 "ioSize=" + ioSize +
-                "targetDir=" + targetDir +
+                ", targetDir='" + targetDir + '\'' +
                 '}';
     }
 }

@@ -4,6 +4,8 @@ import constants.Credentials
 
 class ApiUtil {
     static String HTTPS = "https://";
+//    static String IP = "10.11.57.125"; //change to variable in pipeline
+    static String IP = "mangle.devops.karnagi.monster:8443"
 
     /**
      * Execute API call
@@ -13,7 +15,7 @@ class ApiUtil {
      * @param data
      * @return
      */
-    static def apiCall(script, String url, String method, String data) {
+    static def apiCall(script, String url, String method, String data, T param) {
         script.sh 'pwd'
         println(" Invoking API url:  ${url} ")
         println(" Invoking API method: ${method} ")
@@ -23,10 +25,18 @@ class ApiUtil {
             println(" username: ${script.env.USERNAME} ")
             println(" password: ${script.env.PASSWORD} ")
 
-            def response = script.sh(returnStdout: true, script: "curl -kv ${method} -d \'${data}\' " +
-                    "--user ${script.env.USERNAME}:${script.env.PASSWORD} -H 'Content-Type: application/json' ${url}").trim()
-            script.echo "${response}"
-            return response
+            if (method != "GET") {
+                def response = script.sh(returnStdout: true, script: "curl -kv ${method} -d \'${data}\' " +
+                        "--user ${script.env.USERNAME}:${script.env.PASSWORD} -H 'Content-Type: application/json' ${url}").trim()
+                script.echo "${response}"
+                return response
+            } else {
+                //todo build GET request params
+                def response = script.sh(returnStdout: true, script: "curl -kv ${method} -d \'${data}\' " +
+                        "--user ${script.env.USERNAME}:${script.env.PASSWORD} -H 'Content-Type: application/json' ${url}").trim()
+                script.echo "${response}"
+                return response
+            }
         }
     }
 

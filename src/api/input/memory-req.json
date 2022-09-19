@@ -1,8 +1,8 @@
 {
-  "endpointName": "remote-tomcat",
-  "id": "remote-tomcat",
+  "endpointName": "LSTSCINFJB0AV25",
+  "id": "LSTSCINFJB0AV25",
   "injectionHomeDir": "/tmp/",
   "memoryLoad": 100,
   "taskName": "fault-inject_MEMORY_LOAD-100",
-  "timeoutInMilleseconds": 2.1e+6
+  "timeoutInMilliseconds": 2.1e+6
 }

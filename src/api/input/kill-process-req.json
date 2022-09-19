@@ -1,0 +1,10 @@
+{
+  "endpointName": "LSTSCINFJB0AV25",
+  "id": "LSTSCINFJB0AV25",
+  "injectionHomeDir": "/tmp/",
+  "taskName": "fault-inject_killProcess",
+  "killAll": true,
+  "processId": "111",
+  "processIdentifier": "/var/lib/vcac",
+  "remediationCommand": "" //service restart command
+}

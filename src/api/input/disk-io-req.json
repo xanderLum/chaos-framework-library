@@ -1,8 +1,8 @@
 {
-  "endpointName": "remote-tomcat",
-  "id": "remote-tomcat",
+  "endpointName": "LSTSCINFJB0AV25",
+  "id": "LSTSCINFJB0AV25",
   "injectionHomeDir": "/tmp/",
-  "ioSize": 8e+9,
+  "ioSize": 8e+6,
   "targetDir": "/home/",
   "taskName": "fault-inject_DiskIO_LOAD-8GB",
   "timeoutInMilliseconds": 2.1e+6

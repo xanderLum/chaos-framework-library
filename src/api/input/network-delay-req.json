@@ -1,0 +1,12 @@
+{
+  "endpointName": "LSTSCINFJB0AV25",
+  "faultOperation": "NETWORK_DELAY_MILLISECONDS",
+  "id": "LSTSCINFJB0AV25",
+  "injectionHomeDir": "/tmp/",
+  "jitter": 100,
+  "latency": 1000,
+  "nicName": "eth0",
+  "percentage": 80,
+  "taskName": "fault-inject_network-delay",
+  "timeoutInMilliseconds": 2.1e+6
+}

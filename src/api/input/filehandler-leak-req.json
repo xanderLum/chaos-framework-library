@@ -1,6 +1,6 @@
 {
-  "endpointName": "remote-tomcat",
-  "id": "remote-tomcat",
+  "endpointName": "LSTSCINFJB0AV25",
+  "id": "LSTSCINFJB0AV25",
   "injectionHomeDir": "/tmp/",
   "taskName": "fault-inject_filehandler_leak",
   "timeoutInMilliseconds": 2.1e+6

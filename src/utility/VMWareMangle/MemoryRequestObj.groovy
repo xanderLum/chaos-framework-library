@@ -1,11 +1,14 @@
 package utility.VMWareMangle
 
 class MemoryRequestObj extends BaseRequestObj {
-    int memoryLoad
+    def memoryLoad
 
-    MemoryRequestObj(String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int memoryLoad) {
-        super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName)
-        //if memoryLoad is empty, default memoryLoad is 100
+    MemoryRequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir,
+                     String taskName, def memoryLoad, randomEndpoint,
+                     String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+        super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
+                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+        //if memoryLoad is less than 1, default memoryLoad is 100
         this.memoryLoad = memoryLoad < 1 ? 100 : memoryLoad
     }
 

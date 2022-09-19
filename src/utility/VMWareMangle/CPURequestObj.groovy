@@ -1,11 +1,14 @@
 package utility.VMWareMangle
 
 class CPURequestObj extends BaseRequestObj {
-    int cpuLoad
+    def cpuLoad
 
-    CPURequestObj(String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, int cpuLoad) {
-        super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName)
-        //if cpuLoad is empty, default cpuLoad is 100
+    CPURequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir,
+                  String taskName, def cpuLoad, randomEndpoint,
+                  String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+        super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpoint,
+                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+        //if cpuLoad is less than 1, default cpuLoad is 100
         this.cpuLoad = cpuLoad < 1 ? 100 : cpuLoad
     }
 

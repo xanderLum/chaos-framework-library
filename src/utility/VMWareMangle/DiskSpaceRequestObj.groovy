@@ -5,10 +5,14 @@ import org.apache.groovy.parser.antlr4.util.StringUtils
 
 class DiskSpaceRequestObj extends BaseRequestObj {
     String directoryPath
-    int diskFillSize
+    def diskFillSize
 
-    DiskSpaceRequestObj(String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, String directoryPath, int diskFillSize) {
-        super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName)
+    DiskSpaceRequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir,
+                        String taskName, String directoryPath, def diskFillSize, randomEndpoint,
+                        String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
+        super(endpointName, timeoutInMilliseconds, id, injectionHomeDir, taskName, randomEndpointc,
+                cronExpression, schedTimeoutInMilliseconds, schedId, description)
+        //if directoryPath is empty, default is "/home/"
         this.directoryPath = StringUtils.isEmpty(directoryPath) ? "/home/" : directoryPath
         //if diskFillSize is empty, default diskFillSize is 90
         this.diskFillSize = diskFillSize < 1 ? 90 : diskFillSize

@@ -6,19 +6,23 @@ import org.apache.groovy.parser.antlr4.util.StringUtils
 
 class BaseRequestObj implements Serializable {
     String endpointName
-    int timeoutInMilliseconds
+    def timeoutInMilliseconds
     String id
     String injectionHomeDir
     String taskName
+    Boolean randomEndpoint
+    ScheduleRequestObj schedule
 
-    BaseRequestObj(String endpointName, int timeoutInMilliseconds, String id, String injectionHomeDir, String taskName) {
+    BaseRequestObj(String endpointName, def timeoutInMilliseconds, String id, String injectionHomeDir, String taskName, randomEndpoint,
+                   String cronExpression, def schedTimeoutInMilliseconds, String schedId, String description) {
         this.endpointName = StringUtils.isEmpty(endpointName) ? StaticRequestObj.ENDPOINT : endpointName
         this.timeoutInMilliseconds = timeoutInMilliseconds < 1 ? StaticRequestObj.TIMEOUTINMILLISECONDS : timeoutInMilliseconds
         this.id = StringUtils.isEmpty(id) ? StaticRequestObj.ID : id
         this.injectionHomeDir = StringUtils.isEmpty(injectionHomeDir) ? StaticRequestObj.INJECTIONHOMEDIR : injectionHomeDir
         this.taskName = StringUtils.isEmpty(taskName) ? 'task' : StaticRequestObj.PREFIXTASKNAME + taskName
+        this.randomEndpoint = randomEndpoint
+        this.schedule = new ScheduleRequestObj(cronExpression, schedTimeoutInMilliseconds, schedId, description)
     }
-
 
     @Override
     public String toString() {
@@ -28,6 +32,7 @@ class BaseRequestObj implements Serializable {
                 ", id='" + id + '\'' +
                 ", injectionHomeDir='" + injectionHomeDir + '\'' +
                 ", taskName='" + taskName + '\'' +
+                ", randomEndpoint=" + randomEndpoint +
                 '}';
     }
 }

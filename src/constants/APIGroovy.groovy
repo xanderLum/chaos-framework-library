@@ -10,6 +10,8 @@ enum APIGroovy {
     FILE_HANDLER_LEAK_FAULT_API("filehandler-leak", "/rest/api/v1/faults/filehandler-leak", "filehandler-leak-req.json"),
     CLOCKSKEW_FAULT_API("clockskew", "/rest/api/v1/faults/clockSkew", "clockskew-req.json"),
     NETWORK_FAULT("network", "/rest/api/v1/faults/network-fault", "network-req.json"),
+    KILL_PROCESS_FAULT("kill-process", "/rest/api/v1/faults/kill-process", "kill-process-req.json"),
+    GET_TASK_DETAILS_BY_TASKID("get-taskDetailsByTaskID", "/rest/api/v1/tasks/{taskId}", null),
 
     TEST_API("test-api", "/__admin/mappings", "test-req.json"),
     TEST_CONTEXT_PATH("test-context", "xander.mocklab.io", null);

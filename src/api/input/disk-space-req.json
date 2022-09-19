@@ -1,9 +1,9 @@
 {
   "directoryPath": "/home/",
-  "diskFillSize": "/home/",
-  "endpointName": "remote-tomcat",
-  "id": "remote-tomcat",
+  "diskFillSize": 80,
+  "endpointName": "LSTSCINFJB0AV25",
+  "id": "LSTSCINFJB0AV25",
   "injectionHomeDir": "/tmp/",
-  "taskName": "fault-inject_DiskSPACE_LOAD-8GB",
+  "taskName": "fault-inject_DiskSPACE_LOAD-80",
   "timeoutInMilliseconds": 2.1e+6
 }

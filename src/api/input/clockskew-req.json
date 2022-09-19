@@ -1,9 +1,9 @@
 {
   "clockSkewOperation": "FUTURE",
   "days": 365,
-  "endpointName": "remote-tomcat",
+  "endpointName": "LSTSCINFJB0AV25",
   "hours": 0,
-  "id": "remote-tomcat",
+  "id": "LSTSCINFJB0AV25",
   "injectionHomeDir": "/tmp/",
   "minutes": 0,
   "seconds": 0,

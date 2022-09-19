@@ -1,8 +1,11 @@
 {
-  "cpuLoad": 100,
   "endpointName": "LSTSCINFJB0AV25",
+  "hosts": [
+    "10.1.2.3",
+    "10.1.2.4"
+  ],
   "id": "LSTSCINFJB0AV25",
   "injectionHomeDir": "/tmp/",
-  "taskName": "fault-inject_CPU_LOAD-100",
+  "taskName": "fault-inject_network-partition",
   "timeoutInMilliseconds": 2.1e+6
 }
