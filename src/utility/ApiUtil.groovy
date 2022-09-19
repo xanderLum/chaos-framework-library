@@ -15,7 +15,7 @@ class ApiUtil {
      * @param data
      * @return
      */
-    static def apiCall(script, String url, String method, String data, T param) {
+    static def apiCall(script, String url, String method, String data) {
         script.sh 'pwd'
         println(" Invoking API url:  ${url} ")
         println(" Invoking API method: ${method} ")
