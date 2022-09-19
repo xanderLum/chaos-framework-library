@@ -26,7 +26,7 @@ class ScheduleRequestObj implements Serializable {
     public String toString() {
         return "ScheduleRequestObj{" +
                 "cronExpression='" + cronExpression + '\'' +
-                ", timeoutInMilliseconds=" + timeoutInMilliseconds +
+                ", timeInMilliseconds=" + timeInMilliseconds +
                 ", id='" + id + '\'' +
                 ", description='" + description + '\'' +
                 '}';
