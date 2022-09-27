@@ -32,8 +32,8 @@ class ApiUtil {
                 return response
             } else {
                 //todo build GET request params
-                def response = script.sh(returnStdout: true, script: "curl -kv ${method} -d \'${data}\' " +
-                        "--user ${script.env.USERNAME}:${script.env.PASSWORD} -H 'Content-Type: application/json' ${url}").trim()
+                def response = script.sh(returnStdout: true, script: "taskId=${data}; curl -kv ${method} " +
+                        "--user ${script.env.USERNAME}:${script.env.PASSWORD} -H 'Content-Type: application/json' \"${url}\"").trim()
                 script.echo "${response}"
                 return response
             }

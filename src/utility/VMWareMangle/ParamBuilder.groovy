@@ -2,11 +2,18 @@ package utility.VMWareMangle
 
 import com.fasterxml.jackson.databind.deser.impl.PropertyValue
 import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 
 class ParamBuilder<T> {
 
     static def buildReqParam(T requestObject) {
         return JsonOutput.toJson(requestObject)
+    }
+
+    static def resolveResponseAndRetrieveTaskId(def response) {
+        JsonSlurper jsonSlurper = new JsonSlurper()
+        def taskJsonResponse = jsonSlurper.parseText(response) as TaskAPIResponseBaseResolver
+        return taskJsonResponse.id
     }
 
     /*static def buildKeyValPair(T requestObject) {

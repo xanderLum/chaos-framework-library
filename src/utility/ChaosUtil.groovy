@@ -1,5 +1,6 @@
 package utility
 
+
 import constants.APIGroovy
 import utility.VMWareMangle.*
 
@@ -28,7 +29,14 @@ class ChaosUtil {
         script.sh "echo ChaosUtil Injecting CPU Fault"
         script.sh "echo cpuRequestObj: ${cpuRequestObj.toString()}"
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.CPU_FAULT_API.apiURL, ApiUtil.IP)
-        ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(cpuRequestObj))
+        def response = ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(cpuRequestObj))
+        //resolve response to retrieve TaskId
+        def taskId = ParamBuilder.resolveResponseAndRetrieveTaskId(response)
+        //ReportUtil.getTaskDetails(script, taskId)
+        def taskDetails = ReportUtil.getTaskDetails(script, taskId)
+        //check-in git for the taskDetails
+        //report pipeline to collate
+        script.sh "echo taskDetailsRetrieved: ${taskDetails}"
     }
 
     /**
@@ -256,4 +264,5 @@ class ChaosUtil {
         def url = ApiUtil.urlBuilder(script, APIGroovy.MANGLE_PORTAL_CONTEXT.apiURL, APIGroovy.NETWORK_FAULT.apiURL, ApiUtil.IP)
         ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(killProcessRequestObj))
     }
+
 }
