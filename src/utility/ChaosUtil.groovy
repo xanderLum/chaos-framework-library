@@ -32,6 +32,8 @@ class ChaosUtil {
         def response = ApiUtil.apiCall(script, url, "POST", ParamBuilder.buildReqParam(cpuRequestObj))
         //resolve response to retrieve TaskId
         def taskId = ParamBuilder.resolveResponseAndRetrieveTaskId(response)
+        script.sh "echo taskId: ${taskId}"
+
         //ReportUtil.getTaskDetails(script, taskId)
         def taskDetails = ReportUtil.getTaskDetails(script, taskId)
         //check-in git for the taskDetails
